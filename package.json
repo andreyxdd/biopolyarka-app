@@ -1,0 +1,49 @@
+{
+  "name": "template-app",
+  "version": "0.1.0",
+  "description": "The template starting project for Next.js apps. It includes configuration for the Eslint, typescript, prettier, and husky. Many thanks to https://www.youtube.com/watch?v=sH93pQb9bWM.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prepare": "husky install",
+    "check-types": "tsc --pretty --noEmit",
+    "check-format": "prettier --check .",
+    "check-lint": "eslint . --ext ts --ext tsx --ext js",
+    "format": "prettier --write .",
+    "test all": "npm run check-fromat && npm run check-lint && npm run check-types && npm run build"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.5.0",
+    "@emotion/server": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.5",
+    "@mui/material": "^5.0.6",
+    "next": "^12.0.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@emotion/babel-plugin": "^11.3.0",
+    "@emotion/eslint-plugin": "^11.5.0",
+    "@types/node": "16.11.6",
+    "@types/react": "17.0.33",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "eslint": "<8.0.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-next": "12.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.26.1",
+    "husky": "^7.0.0",
+    "lint-staged": ">=10",
+    "prettier": "^2.4.1",
+    "typescript": "4.4.4"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
+}

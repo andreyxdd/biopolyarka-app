@@ -1,0 +1,4 @@
+node_modules
+**/.next/**
+*.d.ts
+/pages/_document.tsx
