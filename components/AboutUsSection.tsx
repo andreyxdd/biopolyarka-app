@@ -4,10 +4,10 @@ import Image from "next/image";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const StyledSection = styled.section`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: grey;
-  padding: 10px 10px 10px 10px;
+  padding: 50px 10px 50px 10px;
 `;
 
 interface iAboutUsSection {
