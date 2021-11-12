@@ -17,11 +17,11 @@ const StyledImage = styled(Image)`
   border: 10px solid red !important;
 `;
 
-interface iAboutUsSection {
+interface iAboutUsSectionProps {
   abouUstContent: any;
 }
 
-const AboutUsSection: React.FC<iAboutUsSection> = ({ abouUstContent }) => {
+const AboutUsSection: React.FC<iAboutUsSectionProps> = ({ abouUstContent }) => {
   const { aboutUsTitle, aboutUsImage, aboutUsDescription } =
     abouUstContent.fields;
 
@@ -55,7 +55,7 @@ const AboutUsSection: React.FC<iAboutUsSection> = ({ abouUstContent }) => {
               <Typography variant="h4">{aboutUsTitle}</Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body1">
+              <Typography variant="body1" component="div">
                 {documentToReactComponents(aboutUsDescription)}
               </Typography>
             </Grid>
