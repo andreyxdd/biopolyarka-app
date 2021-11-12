@@ -1,13 +1,20 @@
 import styled from "@emotion/styled";
 import React from "react";
-import Image from "next/image";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import Image from "next/image";
+import { Grid, Container, Typography } from "@mui/material";
 
 const StyledSection = styled.section`
   width: 100%;
   height: 100%;
   background-color: grey;
   padding: 50px 10px 50px 10px;
+`;
+
+const StyledImage = styled(Image)`
+  border-radius: 50%;
+  padding: 10px !important;
+  border: 10px solid red !important;
 `;
 
 interface iAboutUsSection {
@@ -20,13 +27,41 @@ const AboutUsSection: React.FC<iAboutUsSection> = ({ abouUstContent }) => {
 
   return (
     <StyledSection>
-      <h2>{aboutUsTitle}</h2>
-      <Image
-        src={"https:" + aboutUsImage.fields.file.url}
-        width={aboutUsImage.fields.file.details.image.width / 4}
-        height={aboutUsImage.fields.file.details.image.height / 4}
-      />
-      <div>{documentToReactComponents(aboutUsDescription)}</div>
+      <Container>
+        <Grid
+          container
+          spacing={1}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid item sm={5}>
+            <StyledImage
+              src={"https:" + aboutUsImage.fields.file.url}
+              width={aboutUsImage.fields.file.details.image.width}
+              height={aboutUsImage.fields.file.details.image.height}
+              alt="Venera About Us Image"
+            />
+          </Grid>
+          <Grid
+            item
+            sm={7}
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="flex-start"
+          >
+            <Grid item>
+              <Typography variant="h4">{aboutUsTitle}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body1">
+                {documentToReactComponents(aboutUsDescription)}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Container>
     </StyledSection>
   );
 };
