@@ -1,6 +1,5 @@
 import { Button, Typography } from "@mui/material";
 import { GetServerSidePropsContext } from "next";
-import StyledEmotionButton from "../components/StyledEmotionButton";
 import React from "react";
 
 const SSRPage = () => {
@@ -10,7 +9,6 @@ const SSRPage = () => {
       <Button type="button" variant="contained" color="primary">
         Server Rendered Button
       </Button>
-      <StyledEmotionButton />
     </>
   );
 };

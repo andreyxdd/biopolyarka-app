@@ -3,6 +3,7 @@ import React from "react";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Image from "next/image";
 import { Grid, Container, Typography } from "@mui/material";
+import { IAboutFields } from "../@types/generated/contentful";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -17,14 +18,11 @@ const StyledImage = styled(Image)`
   border: 10px solid red !important;
 `;
 
-interface iAboutUsSectionProps {
-  abouUstContent: any;
-}
-
-const AboutUsSection: React.FC<iAboutUsSectionProps> = ({ abouUstContent }) => {
-  const { aboutUsTitle, aboutUsImage, aboutUsDescription } =
-    abouUstContent.fields;
-
+const AboutUsSection: React.FC<IAboutFields> = ({
+  aboutUsTitle,
+  aboutUsImage,
+  aboutUsDescription,
+}) => {
   return (
     <StyledSection>
       <Container>
@@ -38,8 +36,8 @@ const AboutUsSection: React.FC<iAboutUsSectionProps> = ({ abouUstContent }) => {
           <Grid item sm={5}>
             <StyledImage
               src={"https:" + aboutUsImage.fields.file.url}
-              width={aboutUsImage.fields.file.details.image.width}
-              height={aboutUsImage.fields.file.details.image.height}
+              width={aboutUsImage?.fields?.file?.details?.image?.width}
+              height={aboutUsImage?.fields?.file?.details?.image?.height}
               alt="Venera About Us Image"
             />
           </Grid>

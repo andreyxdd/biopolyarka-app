@@ -3,11 +3,8 @@ import type { NextPage } from "next";
 // import styles from "../styles/Home.module.css";
 import React from "react";
 import { createClient } from "contentful";
-import PropTypes from "prop-types";
-
-import Navbar from "../components/Navbar";
-import AboutUsSection from "../components/AboutUsSection";
-import MerchSection from "../components/MerchSection";
+import App from "../components/App";
+import { IContentfull } from "../types";
 
 /**
  * Get static properties from the contentful API
@@ -15,16 +12,15 @@ import MerchSection from "../components/MerchSection";
 export async function getStaticProps() {
   const client = createClient({
     space: process.env.CONTENTFUL_SPACE_ID as string,
-    accessToken: process.env.CONTENTFUL_ACCESS_KEY as string,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
   });
 
-  const abouUstContent = await client.getEntry(
-    process.env.CONTENTFUL_ABOUTUS_ENTRY_ID as string
-  );
+  const abouUstContent = (
+    await client.getEntry(process.env.CONTENTFUL_ABOUTUS_ENTRY_ID as string)
+  ).fields;
 
-  const catalougeContent = (
-    await await client.getEntries({ content_type: "ring" })
-  ).items;
+  const catalougeContent = (await client.getEntries({ content_type: "ring" }))
+    .items;
 
   return {
     props: {
@@ -34,33 +30,17 @@ export async function getStaticProps() {
   };
 }
 
-interface iStaticProps {
-  abouUstContent: any;
-  catalougeContent: Array<any>;
-}
-
 /**
  * This is the home page.
  * @return {JSX.Element}
  */
-const Home: NextPage<iStaticProps> = ({
+const Home: NextPage<IContentfull> = ({
   abouUstContent,
   catalougeContent,
 }): JSX.Element => {
-  console.log(catalougeContent);
-
   return (
-    <>
-      <Navbar />
-      <AboutUsSection abouUstContent={abouUstContent} />
-      <MerchSection merchContent={catalougeContent} />
-    </>
+    <App abouUstContent={abouUstContent} catalougeContent={catalougeContent} />
   );
-};
-
-Home.propTypes = {
-  abouUstContent: PropTypes.object.isRequired,
-  catalougeContent: PropTypes.array.isRequired,
 };
 
 export default Home;

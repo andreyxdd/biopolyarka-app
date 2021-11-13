@@ -7,13 +7,29 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+import { IRing } from "../@types/generated/contentful";
+import { ICartItemProps } from "../types";
 
-interface iItemCardProps {
-  data: any;
+interface IItemCardProps {
+  data: IRing;
+  setItems: React.Dispatch<React.SetStateAction<Array<ICartItemProps>>>;
 }
 
-const ItemCard: React.FC<iItemCardProps> = ({ data }) => {
+const ItemCard: React.FC<IItemCardProps> = ({ data, setItems }) => {
   const { title, price, description, cardImage } = data.fields;
+
+  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    //  updateting local storage
+    const localStorageList = localStorage.getItem("itemsList") || "[]";
+    let itemsList = JSON.parse(localStorageList);
+    itemsList = [...itemsList, { title, price }];
+    localStorage.setItem("itemsList", JSON.stringify(itemsList));
+
+    // updateting App state
+    setItems((items) => [...items, { title, price }]);
+  };
 
   return (
     <Card
@@ -27,7 +43,7 @@ const ItemCard: React.FC<iItemCardProps> = ({ data }) => {
       <CardMedia
         component="img"
         alt="green iguana"
-        height="400"
+        height="300"
         image={`https:${cardImage.fields.file.url}`}
       />
       <CardContent>
@@ -42,7 +58,7 @@ const ItemCard: React.FC<iItemCardProps> = ({ data }) => {
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "center" }}>
-        <Button>Добавить в корзину</Button>
+        <Button onClick={handleOnClick}>Добавить в корзину</Button>
       </CardActions>
     </Card>
   );

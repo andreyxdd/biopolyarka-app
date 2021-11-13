@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import React from "react";
 import ItemCard from "./ItemCard";
 import { Grid, Container, Typography, Divider } from "@mui/material";
+import { IRing } from "../@types/generated/contentful";
+import { ICartItemProps } from "../types";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -9,11 +11,16 @@ const StyledSection = styled.section`
   background-color: pink;
   padding: 50px 10px 50px 10px;
 `;
-interface iMerchSectionProps {
-  merchContent: Array<any>;
+
+interface IMerchSectionProps {
+  merchContent: Array<IRing>;
+  setItems: React.Dispatch<React.SetStateAction<Array<ICartItemProps>>>;
 }
 
-const MerchSection: React.FC<iMerchSectionProps> = ({ merchContent }) => {
+const MerchSection: React.FC<IMerchSectionProps> = ({
+  merchContent,
+  setItems,
+}) => {
   return (
     <StyledSection>
       <Container>
@@ -34,7 +41,7 @@ const MerchSection: React.FC<iMerchSectionProps> = ({ merchContent }) => {
           justifyContent="space-evenly"
           alignItems="stretch"
         >
-          {merchContent.map((merchItem: any) => (
+          {merchContent.map((merchItem: IRing) => (
             <Grid
               key={merchItem.sys.id}
               item
@@ -43,7 +50,7 @@ const MerchSection: React.FC<iMerchSectionProps> = ({ merchContent }) => {
               md={6}
               xs={12}
             >
-              <ItemCard data={merchItem} />
+              <ItemCard data={merchItem} setItems={setItems} />
             </Grid>
           ))}
         </Grid>
