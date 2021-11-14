@@ -7,9 +7,15 @@ import { IAboutFields } from "../@types/generated/contentful";
 
 const StyledSection = styled.section`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: grey;
   padding: 50px 10px 50px 10px;
+  display: flex;
+  align-items: center;
+
+  @media only screen and (max-width: 600px) {
+    height: 100%;
+  }
 `;
 
 const StyledImage = styled(Image)`
@@ -24,11 +30,11 @@ const AboutUsSection: React.FC<IAboutFields> = ({
   aboutUsDescription,
 }) => {
   return (
-    <StyledSection>
+    <StyledSection id="aboutUsSection">
       <Container>
         <Grid
           container
-          spacing={1}
+          spacing={3}
           direction="row"
           justifyContent="center"
           alignItems="center"
@@ -50,7 +56,7 @@ const AboutUsSection: React.FC<IAboutFields> = ({
             alignItems="flex-start"
           >
             <Grid item>
-              <Typography variant="h4">{aboutUsTitle}</Typography>
+              <Typography variant="h3">{aboutUsTitle}</Typography>
             </Grid>
             <Grid item>
               <Typography variant="body1" component="div">

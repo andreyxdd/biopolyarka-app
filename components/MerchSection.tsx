@@ -9,7 +9,7 @@ const StyledSection = styled.section`
   width: 100%;
   height: 100%;
   background-color: pink;
-  padding: 50px 10px 50px 10px;
+  padding: 100px 10px 100px 10px;
 `;
 
 interface IMerchSectionProps {
@@ -22,7 +22,7 @@ const MerchSection: React.FC<IMerchSectionProps> = ({
   setItems,
 }) => {
   return (
-    <StyledSection>
+    <StyledSection id="MerchSection">
       <Container>
         <Typography variant="h4">Каталог</Typography>
         <Typography variant="body1" sx={{ mt: 2 }}>
