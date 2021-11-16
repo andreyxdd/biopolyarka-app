@@ -9,3 +9,9 @@ export interface ICartItemProps {
   title: string;
   price: number;
 }
+export interface IAppContextProps {
+  activeNavLinkId: string;
+  setActiveNavLinkId: React.Dispatch<React.SetStateAction<string>>;
+  items: Array<ICartItemProps>;
+  setItems: React.Dispatch<React.SetStateAction<Array<ICartItemProps>>>;
+}
