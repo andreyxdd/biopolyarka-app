@@ -4,6 +4,7 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import Image from "next/image";
 import { Grid, Container, Typography } from "@mui/material";
 import { IAboutFields } from "../@types/generated/contentful";
+import { useNavlink } from "../customHooks/useNavlink";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -29,8 +30,10 @@ const AboutUsSection: React.FC<IAboutFields> = ({
   aboutUsImage,
   aboutUsDescription,
 }) => {
+  const aboutUsRef = useNavlink("About us");
+
   return (
-    <StyledSection id="aboutUsSection">
+    <StyledSection ref={aboutUsRef} id="aboutUsSection">
       <Container>
         <Grid
           container

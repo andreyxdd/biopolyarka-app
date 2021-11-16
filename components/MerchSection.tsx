@@ -3,7 +3,8 @@ import React from "react";
 import ItemCard from "./ItemCard";
 import { Grid, Container, Typography, Divider } from "@mui/material";
 import { IRing } from "../@types/generated/contentful";
-import { ICartItemProps } from "../types";
+import { useContextTypes } from "../customHooks/useContextTypes";
+import { useNavlink } from "../customHooks/useNavlink";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -14,15 +15,14 @@ const StyledSection = styled.section`
 
 interface IMerchSectionProps {
   merchContent: Array<IRing>;
-  setItems: React.Dispatch<React.SetStateAction<Array<ICartItemProps>>>;
 }
 
-const MerchSection: React.FC<IMerchSectionProps> = ({
-  merchContent,
-  setItems,
-}) => {
+const MerchSection: React.FC<IMerchSectionProps> = ({ merchContent }) => {
+  const { setItems } = useContextTypes();
+  const catalougeRef = useNavlink("Catalouge");
+
   return (
-    <StyledSection id="MerchSection">
+    <StyledSection ref={catalougeRef} id="MerchSection">
       <Container>
         <Typography variant="h4">Каталог</Typography>
         <Typography variant="body1" sx={{ mt: 2 }}>
