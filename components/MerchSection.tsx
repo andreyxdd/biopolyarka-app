@@ -22,7 +22,7 @@ const MerchSection: React.FC<IMerchSectionProps> = ({ merchContent }) => {
   const catalougeRef = useNavlink("Catalouge");
 
   return (
-    <StyledSection ref={catalougeRef} id="MerchSection">
+    <StyledSection ref={catalougeRef} id="MerchSectionId">
       <Container>
         <Typography variant="h4">Каталог</Typography>
         <Typography variant="body1" sx={{ mt: 2 }}>
@@ -48,6 +48,7 @@ const MerchSection: React.FC<IMerchSectionProps> = ({ merchContent }) => {
               style={{ display: "flex", width: "100%" }}
               lg={4}
               md={6}
+              sm={6}
               xs={12}
             >
               <ItemCard data={merchItem} setItems={setItems} />

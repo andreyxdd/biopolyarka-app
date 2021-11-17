@@ -33,7 +33,7 @@ const AboutUsSection: React.FC<IAboutFields> = ({
   const aboutUsRef = useNavlink("About us");
 
   return (
-    <StyledSection ref={aboutUsRef} id="aboutUsSection">
+    <StyledSection ref={aboutUsRef} id="aboutUsSectionId">
       <Container>
         <Grid
           container

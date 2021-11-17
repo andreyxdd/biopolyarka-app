@@ -17,8 +17,9 @@ import ClientOnlyDiv from "./ClientOnlyDiv";
 import { useContextTypes } from "../customHooks/useContextTypes";
 
 const navLinks = [
-  { navLinkId: "About us", scrollToId: "aboutUsSection" },
-  { navLinkId: "Catalouge", scrollToId: "MerchSection" },
+  { navLinkId: "About us", scrollToId: "aboutUsSectionId" },
+  { navLinkId: "Catalouge", scrollToId: "MerchSectionId" },
+  { navLinkId: "Checkout", scrollToId: "CheckoutSectionId" },
 ];
 
 const Navbar: React.FC = () => {
