@@ -39,7 +39,7 @@ const AboutUsSection: React.FC<IAboutFields> = ({
     (aboutUsImage?.fields?.file?.details?.image?.height! + 380) / 2;
 
   return (
-    <StyledSection ref={aboutUsRef} id="aboutUsSection">
+    <StyledSection ref={aboutUsRef} id="aboutUsSectionId">
       <Container>
         <Grid
           container
