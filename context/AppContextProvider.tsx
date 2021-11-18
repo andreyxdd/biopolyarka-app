@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import { IAppContextProps, ICartItemProps } from "../types";
+import { IAppContextProps, IItemProps } from "../types";
 
 export const AppContext = createContext<IAppContextProps | null>(null);
 
@@ -11,7 +11,7 @@ const AppContextProvider: React.FC<IAppContextProviderProps> = ({
   children,
 }) => {
   const [activeNavLinkId, setActiveNavLinkId] = useState("");
-  const [items, setItems] = useState<Array<ICartItemProps>>([]);
+  const [items, setItems] = useState<Array<IItemProps>>([]);
 
   useEffect(() => {
     const localStorageList = localStorage.getItem("itemsList") || "[]";
