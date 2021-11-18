@@ -24,7 +24,7 @@ const CatalougeSection: React.FC<ICatalougeSectionProps> = ({
   const catalougeRef = useNavlink("Catalouge");
 
   return (
-    <StyledSection ref={catalougeRef} id="MerchSectionId">
+    <StyledSection ref={catalougeRef} id="CatalougeSectionId">
       <Container>
         <Typography variant="h4">Каталог</Typography>
         <Typography variant="body1" sx={{ mt: 2 }}>

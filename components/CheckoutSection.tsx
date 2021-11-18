@@ -41,11 +41,13 @@ const CheckoutSection = () => {
     event.preventDefault();
 
     if (!radioValue) {
+      // contact type is not selected
       setHelperTextRadio("Please select a conact type.");
       setErrorRadio(true);
+    } else {
+      // contact type and other fields were fulfilled
+      console.log("Successfully submited");
     }
-
-    console.log("Successfully submited");
   };
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,12 +85,14 @@ const CheckoutSection = () => {
   };
 
   const [disabledForm, setDisabledForm] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     if (items.length === 0) {
       setDisabledForm(true);
     } else {
       setDisabledForm(false);
+      setTotalPrice(items.reduce((a, c) => a + c?.price, 0));
     }
   }, [items]);
 
@@ -243,6 +247,20 @@ const CheckoutSection = () => {
                       />
                     ))}
                   </Grid>
+                  {!disabledForm && (
+                    <Grid item xs={12} md={7}>
+                      <Typography
+                        component="legend"
+                        sx={{
+                          color: disabledForm
+                            ? "text.disabled"
+                            : "text.secondary",
+                        }}
+                      >
+                        Итоговая сумма, руб.: {totalPrice}
+                      </Typography>
+                    </Grid>
+                  )}
                 </Grid>
               </Grid>
               <Grid item xs={10} md={5}>
