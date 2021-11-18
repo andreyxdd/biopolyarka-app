@@ -17,7 +17,7 @@ interface IItemCardProps {
 }
 
 const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
-  const { title, price, description, cardImage } = data.fields;
+  const { title, price, description, cardImage, material } = data.fields;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -54,6 +54,9 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
         </Typography>
         <Typography variant="body1" color="text.secondary">
           Стоимость: {price} руб.
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          Материал: {material}
         </Typography>
         <Typography variant="body1" color="text.secondary">
           Описание: {description}

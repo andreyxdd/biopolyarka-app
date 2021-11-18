@@ -34,4 +34,4 @@ npm run build ||
 )
 
 # If everything passes... Now we can commit
-echo '✅✅✅✅ The project was successgully build. The commits are accepted. ✅✅✅✅'npx lint-staged
+echo '✅✅✅✅ The project was successgully build. The commit has been accepted. ✅✅✅✅'npx lint-staged

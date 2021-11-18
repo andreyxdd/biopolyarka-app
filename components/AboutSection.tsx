@@ -6,6 +6,14 @@ import { IAboutFields } from "../@types/generated/contentful";
 import { useNavlink } from "../customHooks/useNavlink";
 import { IoDiamond } from "react-icons/io5";
 
+type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> &
+  Pick<T, TRequired>;
+
+type IAboutSectionProps = OptionalExceptFor<
+  IAboutFields,
+  "title" | "image" | "description"
+>;
+
 const StyledSection = styled.section`
   width: 100%;
   height: 100vh;
@@ -28,16 +36,16 @@ const StyledDiv = styled.div`
   justify-content: center;
 `;
 
-const AboutUsSection: React.FC<IAboutFields> = ({
-  aboutUsTitle,
-  aboutUsImage,
-  aboutUsDescription,
+const AboutSection: React.FC<IAboutSectionProps> = ({
+  title,
+  image,
+  description,
 }) => {
   const aboutUsRef = useNavlink("About us");
 
-  const svgSize = aboutUsImage?.fields?.file?.details?.image?.width! + 400;
+  const svgSize = image?.fields?.file?.details?.image?.width! + 400;
   const svgCircleRadius =
-    (aboutUsImage?.fields?.file?.details?.image?.height! + 380) / 2;
+    (image?.fields?.file?.details?.image?.height! + 380) / 2;
 
   return (
     <StyledSection ref={aboutUsRef} id="aboutUsSectionId">
@@ -88,7 +96,7 @@ const AboutUsSection: React.FC<IAboutFields> = ({
 
                   <use xlinkHref="#round" strokeWidth="2" stroke="black" />
                   <image
-                    href={"https:" + aboutUsImage.fields.file.url}
+                    href={"https:" + image.fields.file.url}
                     clipPath="url(#clip)"
                   />
                 </svg>
@@ -176,11 +184,11 @@ const AboutUsSection: React.FC<IAboutFields> = ({
             alignItems="flex-start"
           >
             <Grid item>
-              <Typography variant="h4">{aboutUsTitle}</Typography>
+              <Typography variant="h4">{title}</Typography>
             </Grid>
             <Grid item>
               <Typography variant="body1" component="div">
-                {documentToReactComponents(aboutUsDescription)}
+                {documentToReactComponents(description)}
               </Typography>
             </Grid>
           </Grid>
@@ -190,4 +198,4 @@ const AboutUsSection: React.FC<IAboutFields> = ({
   );
 };
 
-export default AboutUsSection;
+export default AboutSection;

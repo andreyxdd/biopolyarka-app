@@ -1,7 +1,7 @@
 import { IAboutFields, IRing } from "./@types/generated/contentful";
 
 export interface IContentfull {
-  abouUstContent: IAboutFields;
+  aboutContent: IAboutFields;
   catalougeContent: Array<IRing>;
 }
 

@@ -15,8 +15,8 @@ export async function getStaticProps() {
     accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
   });
 
-  const abouUstContent = (
-    await client.getEntry(process.env.CONTENTFUL_ABOUTUS_ENTRY_ID as string)
+  const aboutContent = (
+    await client.getEntry(process.env.CONTENTFUL_ABOUT_ENTRY_ID as string)
   ).fields;
 
   const catalougeContent = (await client.getEntries({ content_type: "ring" }))
@@ -24,7 +24,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      abouUstContent,
+      aboutContent,
       catalougeContent,
     },
   };
@@ -35,11 +35,11 @@ export async function getStaticProps() {
  * @return {JSX.Element}
  */
 const Home: NextPage<IContentfull> = ({
-  abouUstContent,
+  aboutContent,
   catalougeContent,
 }): JSX.Element => {
   return (
-    <App abouUstContent={abouUstContent} catalougeContent={catalougeContent} />
+    <App aboutContent={aboutContent} catalougeContent={catalougeContent} />
   );
 };
 

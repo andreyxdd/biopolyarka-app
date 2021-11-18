@@ -16,14 +16,20 @@ import NavLink from "./NavLink";
 import ClientOnlyDiv from "./ClientOnlyDiv";
 import { useContextTypes } from "../customHooks/useContextTypes";
 import { scrollTo } from "../utils";
+import { IAboutFields } from "../@types/generated/contentful";
 
 const navLinks = [
   { navLinkId: "About us", scrollToId: "aboutUsSectionId" },
-  { navLinkId: "Catalouge", scrollToId: "MerchSectionId" },
+  { navLinkId: "Catalouge", scrollToId: "CatalougeSectionId" },
   { navLinkId: "Checkout", scrollToId: "CheckoutSectionId" },
 ];
 
-const Navbar: React.FC = () => {
+type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> &
+  Pick<T, TRequired>;
+
+type INavbarProps = OptionalExceptFor<IAboutFields, "navbarTitle">;
+
+const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
   const matches: boolean = useMediaQuery("only screen and (min-width: 750px)");
 
   const { items } = useContextTypes();
@@ -42,7 +48,7 @@ const Navbar: React.FC = () => {
               href="https://www.instagram.com/biopolyarka.a/"
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              BIOPOLYARKA
+              {navbarTitle}
             </a>
           </Typography>
 

@@ -13,11 +13,13 @@ const StyledSection = styled.section`
   padding: 100px 10px 100px 10px;
 `;
 
-interface IMerchSectionProps {
-  merchContent: Array<IRing>;
+interface ICatalougeSectionProps {
+  catalougeContent: Array<IRing>;
 }
 
-const MerchSection: React.FC<IMerchSectionProps> = ({ merchContent }) => {
+const CatalougeSection: React.FC<ICatalougeSectionProps> = ({
+  catalougeContent,
+}) => {
   const { setItems } = useContextTypes();
   const catalougeRef = useNavlink("Catalouge");
 
@@ -41,9 +43,9 @@ const MerchSection: React.FC<IMerchSectionProps> = ({ merchContent }) => {
           justifyContent="space-evenly"
           alignItems="stretch"
         >
-          {merchContent.map((merchItem: IRing, idx: number) => (
+          {catalougeContent.map((catalougeItem: IRing, idx: number) => (
             <Grid
-              key={`${merchItem.sys.id}-${idx}`}
+              key={`${catalougeItem.sys.id}-${idx}`}
               item
               style={{ display: "flex", width: "100%" }}
               lg={4}
@@ -52,8 +54,8 @@ const MerchSection: React.FC<IMerchSectionProps> = ({ merchContent }) => {
               xs={12}
             >
               <ItemCard
-                data={merchItem}
-                id={`${merchItem.sys.id}-${Math.random() * idx}`}
+                data={catalougeItem}
+                id={`${catalougeItem.sys.id}-${Math.random() * idx}`}
                 setItems={setItems}
               />
             </Grid>
@@ -64,4 +66,4 @@ const MerchSection: React.FC<IMerchSectionProps> = ({ merchContent }) => {
   );
 };
 
-export default MerchSection;
+export default CatalougeSection;

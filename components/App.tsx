@@ -1,21 +1,21 @@
 import React from "react";
 import Navbar from "./Navbar";
-import AboutUsSection from "./AboutUsSection";
-import MerchSection from "./MerchSection";
+import AboutSection from "./AboutSection";
+import CatalougeSection from "./CatalougeSection";
 import CheckoutSection from "./CheckoutSection";
 import { IContentfull } from "../types";
 import AppContextProvider from "../context/AppContextProvider";
 
-const App: React.FC<IContentfull> = ({ abouUstContent, catalougeContent }) => {
+const App: React.FC<IContentfull> = ({ aboutContent, catalougeContent }) => {
   return (
     <AppContextProvider>
-      <Navbar />
-      <AboutUsSection
-        aboutUsTitle={abouUstContent.aboutUsTitle}
-        aboutUsImage={abouUstContent.aboutUsImage}
-        aboutUsDescription={abouUstContent.aboutUsDescription}
+      <Navbar navbarTitle={aboutContent.navbarTitle} />
+      <AboutSection
+        title={aboutContent.title}
+        image={aboutContent.image}
+        description={aboutContent.description}
       />
-      <MerchSection merchContent={catalougeContent} />
+      <CatalougeSection catalougeContent={catalougeContent} />
       <CheckoutSection />
     </AppContextProvider>
   );

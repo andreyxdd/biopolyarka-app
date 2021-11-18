@@ -4,14 +4,17 @@ import { Asset, Entry } from "contentful";
 import { Document } from "@contentful/rich-text-types";
 
 export interface IAboutFields {
-  /** about-us-title */
-  aboutUsTitle?: string | undefined;
+  /** navbar-title */
+  navbarTitle: string;
 
-  /** about-us-image */
-  aboutUsImage: Asset;
+  /** title */
+  title?: string | undefined;
 
-  /** about-us-description */
-  aboutUsDescription: Document;
+  /** image */
+  image: Asset;
+
+  /** description */
+  description: Document;
 }
 
 /** Контент для секции "О нас" */
@@ -34,17 +37,20 @@ export interface IAbout extends Entry<IAboutFields> {
 }
 
 export interface IRingFields {
+  /** Card Image */
+  cardImage: Asset;
+
   /** Title */
   title: string;
+
+  /** Price */
+  price: number;
 
   /** Description */
   description: string;
 
-  /** Card Image */
-  cardImage: Asset;
-
-  /** Price */
-  price: number;
+  /** Material */
+  material?: string | undefined;
 }
 
 /** Модель для создания карточек с инофрмацией о кольцах. */
