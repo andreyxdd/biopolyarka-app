@@ -1,8 +1,23 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Grid, Container, Typography, Divider, TextField } from "@mui/material";
+import {
+  Grid,
+  Container,
+  Typography,
+  Divider,
+  TextField,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  FormHelperText,
+  RadioGroup,
+  Radio,
+  Button,
+} from "@mui/material";
 import { useContextTypes } from "../customHooks/useContextTypes";
 import { useNavlink } from "../customHooks/useNavlink";
+import ItemCheckoutCard from "./ItemCheckoutCard";
+import { IItemProps } from "../types";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -15,6 +30,57 @@ const CheckoutSection = () => {
   const { items } = useContextTypes();
   const checkoutRef = useNavlink("Checkout");
 
+  // state and methods to controll the form
+
+  const [radioValue, setRadioValue] = React.useState("");
+  const [helperTextRadio, setHelperTextRadio] = React.useState("");
+  const [errorRadio, setErrorRadio] = React.useState(false);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!radioValue) {
+      setHelperTextRadio("Please select a conact type.");
+      setErrorRadio(true);
+    }
+
+    console.log("Successfully submited");
+  };
+
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRadioValue((event.target as HTMLInputElement).value);
+    setHelperTextRadio(" ");
+    setErrorRadio(false);
+  };
+
+  const [helperTextName, setHelperTextName] = React.useState("");
+  const [errorName, setErrorName] = React.useState(false);
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!/^[a-zA-Z\s]*$/.test(event.target.value)) {
+      setHelperTextName("Your name field can only contain letters");
+      setErrorName(true);
+    } else {
+      setHelperTextName("");
+      setErrorName(false);
+    }
+  };
+
+  const [helperTextContact, setHelperTextContact] = React.useState("");
+  const [errorContact, setErrorContact] = React.useState(false);
+  const handleContactChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (
+      !/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/.test(
+        event.target.value
+      )
+    ) {
+      setHelperTextContact("Entered phone number is incorrect");
+      setErrorContact(true);
+    } else {
+      setHelperTextContact("");
+      setErrorContact(false);
+    }
+  };
+
   return (
     <StyledSection ref={checkoutRef} id="CheckoutSectionId">
       <Container>
@@ -25,19 +91,163 @@ const CheckoutSection = () => {
           мессенджере, либо email.
         </Typography>
         <Divider variant="middle" sx={{ m: 4 }} />
-        <Grid container spacing={2} justifyContent="center" alignItems="center">
-          <Grid item xs={12} md={6}>
-            <TextField
-              required
-              defaultValue="Ваше имя"
-              fullWidth
-              label="Ваше имя"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            {items.length}
-          </Grid>
-        </Grid>
+        <form onSubmit={handleSubmit}>
+          <FormControl
+            fullWidth
+            error={errorName || errorContact || errorRadio}
+            component="fieldset"
+          >
+            <Grid
+              container
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid item xs={12} md={7}>
+                <TextField
+                  required
+                  fullWidth
+                  label="Ваше имя"
+                  onChange={handleNameChange}
+                  error={errorName}
+                  helperText={helperTextName}
+                  autoComplete="name"
+                  type="text"
+                />
+              </Grid>
+              <Grid
+                item
+                direction="row"
+                container
+                justifyContent="center"
+                alignItems="center"
+                spacing={2}
+                xs={12}
+              >
+                <Grid item xs={12} md={7}>
+                  <FormLabel error={errorRadio} component="legend">
+                    Connect via:
+                  </FormLabel>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  justifyContent="space-around"
+                  alignItems="center"
+                  xs={12}
+                >
+                  <RadioGroup
+                    aria-label="contact-type"
+                    row
+                    name="controlled-radio-buttons-group"
+                    value={radioValue}
+                    onChange={handleRadioChange}
+                  >
+                    <Grid item>
+                      <FormControlLabel
+                        value="telegram"
+                        control={<Radio />}
+                        label="Telegram"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <FormControlLabel
+                        value="whatsapp"
+                        control={<Radio />}
+                        label="Whatsapp"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <FormControlLabel
+                        value="call"
+                        control={<Radio />}
+                        label="Phone Call"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <FormControlLabel
+                        value="email"
+                        control={<Radio />}
+                        label="E-mail"
+                      />
+                    </Grid>
+                  </RadioGroup>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} md={7}>
+                <TextField
+                  required
+                  fullWidth
+                  label="Mobile phone or email"
+                  onChange={handleContactChange}
+                  error={errorContact}
+                  helperText={helperTextContact}
+                  autoComplete="name"
+                  type="tel"
+                  placeholder="+7 (999) 999-99-99"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Grid
+                  item
+                  container
+                  justifyContent="center"
+                  alignItems="center"
+                  spacing={2}
+                  xs={12}
+                >
+                  <Grid item xs={12} md={7}>
+                    <Typography
+                      component="legend"
+                      sx={{ color: "text.secondary" }}
+                    >
+                      Order Details:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    {items.map((cartItem: IItemProps) => (
+                      <ItemCheckoutCard
+                        key={cartItem?.id}
+                        id={cartItem?.id}
+                        title={cartItem?.title}
+                        price={cartItem?.price}
+                      />
+                    ))}
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={10} md={5}>
+                {(errorName || errorContact || errorRadio) && (
+                  <FormHelperText
+                    style={{ textAlign: "center", marginBottom: "5px" }}
+                  >
+                    {errorName && (
+                      <>
+                        {helperTextName}
+                        <br />
+                      </>
+                    )}
+                    {errorContact && (
+                      <>
+                        {helperTextContact}
+                        <br />
+                      </>
+                    )}
+                    {errorRadio && (
+                      <>
+                        {helperTextRadio}
+                        <br />
+                      </>
+                    )}
+                  </FormHelperText>
+                )}
+                <Button fullWidth variant="contained" type="submit">
+                  SUBMIT
+                </Button>
+              </Grid>
+            </Grid>
+          </FormControl>
+        </form>
       </Container>
     </StyledSection>
   );

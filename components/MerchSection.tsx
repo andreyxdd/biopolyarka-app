@@ -41,9 +41,9 @@ const MerchSection: React.FC<IMerchSectionProps> = ({ merchContent }) => {
           justifyContent="space-evenly"
           alignItems="stretch"
         >
-          {merchContent.map((merchItem: IRing) => (
+          {merchContent.map((merchItem: IRing, idx: number) => (
             <Grid
-              key={merchItem.sys.id}
+              key={`${merchItem.sys.id}-${idx}`}
               item
               style={{ display: "flex", width: "100%" }}
               lg={4}
@@ -51,7 +51,11 @@ const MerchSection: React.FC<IMerchSectionProps> = ({ merchContent }) => {
               sm={6}
               xs={12}
             >
-              <ItemCard data={merchItem} setItems={setItems} />
+              <ItemCard
+                data={merchItem}
+                id={`${merchItem.sys.id}-${Math.random() * idx}`}
+                setItems={setItems}
+              />
             </Grid>
           ))}
         </Grid>

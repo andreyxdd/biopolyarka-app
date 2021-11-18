@@ -5,13 +5,14 @@ export interface IContentfull {
   catalougeContent: Array<IRing>;
 }
 
-export interface ICartItemProps {
+export interface IItemProps {
   title: string;
   price: number;
+  id: string;
 }
 export interface IAppContextProps {
   activeNavLinkId: string;
   setActiveNavLinkId: React.Dispatch<React.SetStateAction<string>>;
-  items: Array<ICartItemProps>;
-  setItems: React.Dispatch<React.SetStateAction<Array<ICartItemProps>>>;
+  items: Array<IItemProps>;
+  setItems: React.Dispatch<React.SetStateAction<Array<IItemProps>>>;
 }

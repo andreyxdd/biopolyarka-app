@@ -4,6 +4,7 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { Grid, Container, Typography } from "@mui/material";
 import { IAboutFields } from "../@types/generated/contentful";
 import { useNavlink } from "../customHooks/useNavlink";
+import { IoDiamond } from "react-icons/io5";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -15,7 +16,7 @@ const StyledSection = styled.section`
 
   @media only screen and (max-width: 650px) {
     height: 100%;
-    padding-top: 100px;
+    padding-top: 120px;
     padding-bottom: 100px;
   }
 `;
@@ -56,6 +57,14 @@ const AboutUsSection: React.FC<IAboutFields> = ({
                   viewBox={`0 0 ${svgSize} ${svgSize}`}
                   version="1.1"
                 >
+                  <IoDiamond
+                    className="fade-in"
+                    x={`${svgCircleRadius - 16}`}
+                    y="-5px"
+                    size="3.5em"
+                    color="white"
+                  />
+
                   <circle
                     className="half-circle half-circle-forward"
                     transform={`rotate(90, ${svgSize / 2}, ${svgSize / 2})`}
@@ -69,8 +78,8 @@ const AboutUsSection: React.FC<IAboutFields> = ({
                     <circle
                       id="round"
                       cx={`${svgSize / 2}`}
-                      cy={`${svgSize / 2}`}
-                      r={`${svgCircleRadius - 20}`}
+                      cy={`${svgSize / 2 + 20}`}
+                      r={`${svgCircleRadius - 50}`}
                     />
                     <clipPath id="clip">
                       <use xlinkHref="#round" />
@@ -85,17 +94,34 @@ const AboutUsSection: React.FC<IAboutFields> = ({
                 </svg>
               </div>
               <style jsx>{`
+                .fade-in > path {
+                  animation-name: fadeIn;
+                  animation-iteration-count: 1;
+                  animation-timing-function: ease-in;
+                  animation-duration: 2s;
+                }
+
+                @keyframes fadeIn {
+                  from {
+                    opacity: 0;
+                  }
+                  to {
+                    opacity: 1;
+                  }
+                }
+
                 image {
                   width: 100%;
                   border-radius: 50%;
                 }
+
                 .half-circle {
                   cx: ${svgSize / 2};
                   cy: ${svgSize / 2};
                   r: ${svgCircleRadius};
                   stroke: yellow;
                   fill: transparent;
-                  stroke-width: 6;
+                  stroke-width: 8;
                 }
 
                 .half-circle-forward {
@@ -106,7 +132,7 @@ const AboutUsSection: React.FC<IAboutFields> = ({
 
                 @keyframes drawForward {
                   to {
-                    stroke-dashoffset: ${3.145 * svgCircleRadius + 200};
+                    stroke-dashoffset: ${3.145 * svgCircleRadius + 80};
                   }
                 }
 
@@ -118,7 +144,7 @@ const AboutUsSection: React.FC<IAboutFields> = ({
 
                 @keyframes drawBackwards {
                   to {
-                    stroke-dashoffset: ${-3.145 * svgCircleRadius - 200};
+                    stroke-dashoffset: ${-3.145 * svgCircleRadius - 80};
                   }
                 }
 

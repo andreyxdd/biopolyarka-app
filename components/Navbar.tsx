@@ -15,6 +15,7 @@ import { GiDiamondHard, GiShoppingCart } from "react-icons/gi";
 import NavLink from "./NavLink";
 import ClientOnlyDiv from "./ClientOnlyDiv";
 import { useContextTypes } from "../customHooks/useContextTypes";
+import { scrollTo } from "../utils";
 
 const navLinks = [
   { navLinkId: "About us", scrollToId: "aboutUsSectionId" },
@@ -26,6 +27,10 @@ const Navbar: React.FC = () => {
   const matches: boolean = useMediaQuery("only screen and (min-width: 750px)");
 
   const { items } = useContextTypes();
+
+  const handleOnCartClick = () => {
+    scrollTo({ id: "CheckoutSectionId", duration: 2000 });
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -57,7 +62,12 @@ const Navbar: React.FC = () => {
 
           <ClientOnlyDiv style={{ marginLeft: "auto", paddingTop: "5px" }}>
             <Tooltip title="Корзина">
-              <IconButton size="large" color="inherit" aria-label="cart">
+              <IconButton
+                size="large"
+                color="inherit"
+                aria-label="cart"
+                onClick={handleOnCartClick}
+              >
                 <Badge badgeContent={items.length} color="secondary" showZero>
                   <GiShoppingCart size="1.2em" />
                 </Badge>
@@ -71,7 +81,7 @@ const Navbar: React.FC = () => {
                   edge="end"
                   color="inherit"
                   aria-label="menu"
-                  sx={{ ml: 2 }}
+                  sx={{ ml: 1 }}
                 >
                   <MenuIcon />
                 </IconButton>

@@ -8,27 +8,28 @@ import {
   Typography,
 } from "@mui/material";
 import { IRing } from "../@types/generated/contentful";
-import { ICartItemProps } from "../types";
+import { IItemProps } from "../types";
 
 interface IItemCardProps {
   data: IRing;
-  setItems: React.Dispatch<React.SetStateAction<Array<ICartItemProps>>>;
+  setItems: React.Dispatch<React.SetStateAction<Array<IItemProps>>>;
+  id: string;
 }
 
-const ItemCard: React.FC<IItemCardProps> = ({ data, setItems }) => {
+const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
   const { title, price, description, cardImage } = data.fields;
 
-  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     //  updateting local storage
     const localStorageList = localStorage.getItem("itemsList") || "[]";
     let itemsList = JSON.parse(localStorageList);
-    itemsList = [...itemsList, { title, price }];
+    itemsList = [...itemsList, { title, price, id }];
     localStorage.setItem("itemsList", JSON.stringify(itemsList));
 
     // updateting App state
-    setItems((items) => [...items, { title, price }]);
+    setItems((items) => [...items, { title, price, id }]);
   };
 
   return (
@@ -38,6 +39,7 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems }) => {
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "column",
+        margin: "3px",
       }}
     >
       <CardMedia
@@ -58,7 +60,7 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems }) => {
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "center" }}>
-        <Button onClick={handleOnClick}>Добавить в корзину</Button>
+        <Button onClick={handleClick}>Добавить в корзину</Button>
       </CardActions>
     </Card>
   );
