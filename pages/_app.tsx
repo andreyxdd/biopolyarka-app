@@ -19,7 +19,11 @@ const App = (props: MyAppProps) => {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>My page</title>
+        <title>BIOPOLYARKA</title>
+        <link
+          rel="icon"
+          href="https://img.icons8.com/color/48/000000/diamond.png"
+        />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={theme}>

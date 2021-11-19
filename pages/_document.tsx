@@ -10,6 +10,11 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <title>BIOPOLYARKA</title>
+          <link
+            rel="icon"
+            href="https://img.icons8.com/color/48/000000/diamond.png"
+          />
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link
