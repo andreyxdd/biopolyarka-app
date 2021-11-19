@@ -5,6 +5,7 @@ import CatalougeSection from "./CatalougeSection";
 import CheckoutSection from "./CheckoutSection";
 import { IContentfull } from "../types";
 import AppContextProvider from "../context/AppContextProvider";
+import Footer from "./Footer";
 
 const App: React.FC<IContentfull> = ({ aboutContent, catalougeContent }) => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC<IContentfull> = ({ aboutContent, catalougeContent }) => {
       />
       <CatalougeSection catalougeContent={catalougeContent} />
       <CheckoutSection />
+      <Footer />
     </AppContextProvider>
   );
 };

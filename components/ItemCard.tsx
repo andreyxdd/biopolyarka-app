@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import styled from "@emotion/styled";
 import {
   Card,
   CardActions,
@@ -16,8 +17,20 @@ interface IItemCardProps {
   id: string;
 }
 
+const StyledButton = styled(Button)`
+  background-color: #F0BD6A;
+  color: #181818;
+  &:hover {
+    background-color: #edae49;
+  },
+`;
+
 const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
   const { title, price, description, cardImage, material } = data.fields;
+
+  useEffect(() => {
+    console.log(description);
+  }, [description]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -40,6 +53,7 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
         justifyContent: "space-between",
         flexDirection: "column",
         margin: "3px",
+        backgroundColor: "#f9f1f3",
       }}
     >
       <CardMedia
@@ -58,12 +72,16 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
         <Typography variant="body1" color="text.secondary">
           Материал: {material}
         </Typography>
+        {/*
         <Typography variant="body1" color="text.secondary">
           Описание: {description}
         </Typography>
+          */}
       </CardContent>
       <CardActions sx={{ justifyContent: "center" }}>
-        <Button onClick={handleClick}>Добавить в корзину</Button>
+        <StyledButton onClick={handleClick} variant="contained">
+          Добавить в корзину
+        </StyledButton>
       </CardActions>
     </Card>
   );

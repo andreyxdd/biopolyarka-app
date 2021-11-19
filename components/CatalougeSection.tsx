@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
 import React from "react";
+import styled from "@emotion/styled";
 import ItemCard from "./ItemCard";
 import { Grid, Container, Typography, Divider } from "@mui/material";
 import { IRing } from "../@types/generated/contentful";
@@ -9,7 +9,8 @@ import { useNavlink } from "../customHooks/useNavlink";
 const StyledSection = styled.section`
   width: 100%;
   height: 100%;
-  background-color: pink;
+  background-color: rgba(255, 255, 255);
+  background-image: linear-gradient(#773344, #ffffff);
   padding: 100px 10px 100px 10px;
 `;
 
@@ -26,15 +27,18 @@ const CatalougeSection: React.FC<ICatalougeSectionProps> = ({
   return (
     <StyledSection ref={catalougeRef} id="CatalougeSectionId">
       <Container>
-        <Typography variant="h4">Каталог</Typography>
-        <Typography variant="body1" sx={{ mt: 2 }}>
+        <Typography variant="h4" style={{ color: "rgb(255,255,255)" }}>
+          Каталог
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ mt: 2 }}
+          style={{ color: "rgb(255,255,255,0.8)" }}
+        >
           Nam molestie volutpat orci, eget iaculis erat ullamcorper a. Sed
           volutpat tellus diam, ac tempor turpis elementum ut. Proin aliquet,
           lectus non hendrerit bibendum, mauris massa condimentum metus, eu
-          facilisis magna justo sed arcu. Morbi egestas sem a elit dignissim
-          imperdiet. Ut vel sagittis tellus. In orci mi, finibus a lacus
-          imperdiet, dignissim interdum tortor. Fusce hendrerit finibus massa,
-          ac pharetra metus iaculis in. Mauris a dapibus nisi.
+          facilisis magna justo sed arcu.
         </Typography>
         <Divider variant="middle" sx={{ m: 4 }} />
         <Grid

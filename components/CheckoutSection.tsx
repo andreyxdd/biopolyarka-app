@@ -23,8 +23,16 @@ import NumberFormatCustom from "./NumberFormatCustom";
 const StyledSection = styled.section`
   width: 100%;
   height: 100%;
-  background-color: lightgreen;
-  padding: 100px 10px 100px 10px;
+  background-color: #ffffff;
+  padding: 120px 10px 100px 10px;
+`;
+
+const StyledButton = styled(Button)`
+  background-color: #F0BD6A;
+  color: #181818;
+  &:hover {
+    background-color: #edae49;
+  },
 `;
 
 const CheckoutSection = () => {
@@ -285,14 +293,14 @@ const CheckoutSection = () => {
                     {helperTextRadio}
                   </FormHelperText>
                 )}
-                <Button
+                <StyledButton
                   fullWidth
                   variant="contained"
                   type="submit"
                   disabled={disabledForm}
                 >
                   SUBMIT
-                </Button>
+                </StyledButton>
               </Grid>
             </Grid>
           </FormControl>

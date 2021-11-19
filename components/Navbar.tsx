@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "@react-hook/media-query";
 // import styled from "@emotion/styled";
 import {
@@ -30,7 +30,9 @@ type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> &
 type INavbarProps = OptionalExceptFor<IAboutFields, "navbarTitle">;
 
 const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
-  const matches: boolean = useMediaQuery("only screen and (min-width: 750px)");
+  const onMobile: boolean = useMediaQuery("only screen and (min-width: 750px)");
+
+  const [navColorShade, setNavColorShade] = useState(0.8);
 
   const { items } = useContextTypes();
 
@@ -38,9 +40,24 @@ const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
     scrollTo({ id: "CheckoutSectionId", duration: 2000 });
   };
 
+  useEffect(() => {
+    setNavColorShade(1.0);
+  }, [onMobile]);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar style={{ position: "fixed" }}>
+      <AppBar
+        style={{
+          position: "fixed",
+          backgroundColor: `rgba(11, 0, 20, ${navColorShade})`,
+        }}
+        onMouseEnter={() => {
+          setNavColorShade(1.0);
+        }}
+        onMouseLeave={() => {
+          setNavColorShade(onMobile ? 1.0 : 0.8);
+        }}
+      >
         <Toolbar>
           <GiDiamondHard size="2.5em" />
           <Typography variant="h6" component="div" sx={{ ml: 2 }}>
@@ -53,7 +70,7 @@ const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
           </Typography>
 
           <ClientOnlyDiv style={{ float: "none", marginLeft: "auto" }}>
-            {matches && (
+            {onMobile && (
               <>
                 {navLinks.map(({ navLinkId, scrollToId }) => (
                   <NavLink
@@ -80,7 +97,7 @@ const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
               </IconButton>
             </Tooltip>
 
-            {!matches && (
+            {!onMobile && (
               <Tooltip title="Меню">
                 <IconButton
                   size="large"
