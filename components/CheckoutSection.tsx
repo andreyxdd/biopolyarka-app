@@ -80,7 +80,7 @@ const CheckoutSection = () => {
   const [errorName, setErrorName] = useState(false);
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!/^[a-zA-Z\s]*$/.test(event.target.value)) {
-      setHelperTextName("Your name field can only contain letters");
+      setHelperTextName("Пожалуйста, используйте только буквы в этом поле");
       setErrorName(true);
     } else {
       setHelperTextName("");
@@ -97,7 +97,7 @@ const CheckoutSection = () => {
           event.target.value
         )
       ) {
-        setHelperTextContact("Entered email is incorrect");
+        setHelperTextContact("E-mail введен некорректно");
         setErrorContact(true);
       } else {
         setHelperTextContact("");
@@ -109,7 +109,7 @@ const CheckoutSection = () => {
           event.target.value
         )
       ) {
-        setHelperTextContact("Entered phone number is incorrect");
+        setHelperTextContact("Номер телефона введен некорректно");
         setErrorContact(true);
       } else {
         setHelperTextContact("");
@@ -182,7 +182,7 @@ const CheckoutSection = () => {
                     disabled={disabledForm}
                     required
                   >
-                    Connect via:
+                    Связаться через:
                   </FormLabel>
                 </Grid>
                 <Grid
@@ -217,7 +217,7 @@ const CheckoutSection = () => {
                       <FormControlLabel
                         value="call"
                         control={<Radio />}
-                        label="Phone Call"
+                        label="Звонок"
                       />
                     </Grid>
                     <Grid item>
@@ -272,7 +272,7 @@ const CheckoutSection = () => {
                           : "text.secondary",
                       }}
                     >
-                      Order Details:
+                      Детали заказа:
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>

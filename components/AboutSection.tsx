@@ -6,37 +6,24 @@ import { IAboutFields } from "../@types/generated/contentful";
 import { useNavlink } from "../customHooks/useNavlink";
 import Image from "next/image";
 
-type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> &
-  Pick<T, TRequired>;
-
-type IAboutSectionProps = OptionalExceptFor<
-  IAboutFields,
-  "title" | "image" | "description"
->;
-
 const StyledSection = styled.section`
   width: 100%;
   height: 100vh;
   background-color: #ffffff;
-  padding: 10px 10px 10px 10px;
+  padding-top: 1vh;
+  padding-bottom: 1.2vh;
   display: flex;
   align-items: center;
 
-  @media only screen and (max-width: 650px) {
+  @media only screen and (max-width: 950px) {
     height: 100%;
-    padding-top: 120px;
+    padding-top: 12.5vh;
     padding-bottom: 10px;
   }
 `;
 
-const StyledDiv = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const AboutSection: React.FC<IAboutSectionProps> = ({
+const AboutSection: React.FC<IAboutFields> = ({
+  navbarTitle,
   title,
   image,
   description,
@@ -53,29 +40,37 @@ const AboutSection: React.FC<IAboutSectionProps> = ({
           justifyContent="center"
           alignItems="center"
         >
-          <Grid item sm={6} xs={12}>
-            <StyledDiv>
-              <Image
-                src={"https:" + image.fields.file.url}
-                alt="Boss Venera Biopolyarka"
-                width={image?.fields?.file?.details?.image?.width}
-                height={image?.fields?.file?.details?.image?.height}
-              />
-            </StyledDiv>
+          <Grid container item xs={12} justifyContent="center">
+            <p
+              className="customFont"
+              style={{
+                fontSize: "11vw",
+                paddingRight: "4vh",
+                color: "rgba(255, 158, 1, 0.8)",
+                margin: "4px -2px -2px -2px",
+                textShadow: "3.3vh -3.1vw rgba(255, 158, 1, 0.3)",
+              }}
+            >
+              {navbarTitle}
+            </p>
+          </Grid>
+          <Grid item xs={4}>
+            <Image
+              src={"https:" + image.fields.file.url}
+              alt={`Boss Venera ${title}`}
+              width={image?.fields?.file?.details?.image?.width}
+              height={image?.fields?.file?.details?.image?.height}
+            />
           </Grid>
           <Grid
             item
-            sm={6}
-            xs={12}
+            xs={8}
             container
             direction="column"
             justifyContent="center"
             alignItems="flex-start"
           >
             <Grid item>
-              <Typography variant="h4" style={{ color: "black" }}>
-                {title}
-              </Typography>
               <Grid item>
                 <Typography
                   variant="body1"

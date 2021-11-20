@@ -12,6 +12,7 @@ const App: React.FC<IContentfull> = ({ aboutContent, collectionContent }) => {
     <AppContextProvider>
       <Navbar navbarTitle={aboutContent.navbarTitle} />
       <AboutSection
+        navbarTitle={aboutContent.navbarTitle}
         title={aboutContent.title}
         image={aboutContent.image}
         description={aboutContent.description}

@@ -7,6 +7,8 @@ import {
   IconButton,
   Tooltip,
   Badge,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { BsBag } from "react-icons/bs";
@@ -36,12 +38,23 @@ const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
     scrollTo({ id: "checkoutSectionId", duration: 2000 });
   };
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleMobileMenuClick = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         style={{
           position: "fixed",
-          paddingBottom: "8px",
+          paddingBottom: "10px",
         }}
       >
         <Toolbar>
@@ -70,6 +83,7 @@ const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
                     key={`${navLinkId}-${scrollToId}`}
                     navLinkId={navLinkId}
                     scrollToId={scrollToId}
+                    onMobile={false}
                   />
                 ))}
               </>
@@ -102,17 +116,47 @@ const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
             </Tooltip>
 
             {onMobile && (
-              <Tooltip title="Меню">
-                <IconButton
-                  size="large"
-                  edge="end"
-                  color="inherit"
-                  aria-label="menu"
-                  sx={{ ml: 1 }}
+              <>
+                <Tooltip title="Меню">
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    color="inherit"
+                    aria-label="menu"
+                    aria-controls="basic-menu"
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleMobileMenuClick}
+                    sx={{ ml: 1 }}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                  style={{ marginTop: "14px", marginLeft: "14px" }}
                 >
-                  <MenuIcon />
-                </IconButton>
-              </Tooltip>
+                  {navLinks.map(({ navLinkId, scrollToId }) => (
+                    <MenuItem
+                      key={`${navLinkId}-${scrollToId}-mobile`}
+                      dense
+                      onClick={handleClose}
+                    >
+                      <NavLink
+                        navLinkId={navLinkId}
+                        scrollToId={scrollToId}
+                        onMobile={true}
+                      />
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
             )}
           </ClientOnlyDiv>
         </Toolbar>

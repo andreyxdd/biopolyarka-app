@@ -5,9 +5,14 @@ import { useContextTypes } from "../customHooks/useContextTypes";
 interface INavLinkProps {
   navLinkId: string;
   scrollToId: string;
+  onMobile: boolean;
 }
 
-const NavLink: React.FC<INavLinkProps> = ({ navLinkId, scrollToId }) => {
+const NavLink: React.FC<INavLinkProps> = ({
+  navLinkId,
+  scrollToId,
+  onMobile,
+}) => {
   const { activeNavLinkId, setActiveNavLinkId } = useContextTypes();
 
   const handleClick = () => {
@@ -19,12 +24,18 @@ const NavLink: React.FC<INavLinkProps> = ({ navLinkId, scrollToId }) => {
   return (
     <span
       id={navLinkId}
-      className={activeNavLinkId === navLinkId ? "activeClass" : ""}
+      className={
+        onMobile
+          ? "spanMobile"
+          : activeNavLinkId === navLinkId
+          ? "spanPC activeClass"
+          : "spanPC"
+      }
       onClick={handleClick}
     >
       {navLinkId}
       <style jsx>{`
-        span {
+        .spanPC {
           font-size: 18px;
           border-bottom: 2px solid transparent;
           transition: border-bottom 0.15s ease;
@@ -33,12 +44,12 @@ const NavLink: React.FC<INavLinkProps> = ({ navLinkId, scrollToId }) => {
           padding-bottom: 0.5em;
         }
 
-        span:hover {
+        .spanPC:hover {
           cursor: pointer;
           border-bottom: 2px solid white;
         }
 
-        span.activeClass {
+        .activeClass {
           border-bottom-color: white;
         }
       `}</style>
