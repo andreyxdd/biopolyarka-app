@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useMediaQuery } from "@react-hook/media-query";
-// import styled from "@emotion/styled";
 import {
   AppBar,
   Box,
   Toolbar,
-  Typography,
   IconButton,
   Tooltip,
   Badge,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { GiDiamondHard, GiShoppingCart } from "react-icons/gi";
+import { BsBag } from "react-icons/bs";
 import NavLink from "./NavLink";
 import ClientOnlyDiv from "./ClientOnlyDiv";
 import { useContextTypes } from "../customHooks/useContextTypes";
@@ -19,9 +17,9 @@ import { scrollTo } from "../utils";
 import { IAboutFields } from "../@types/generated/contentful";
 
 const navLinks = [
-  { navLinkId: "About us", scrollToId: "aboutUsSectionId" },
-  { navLinkId: "Catalouge", scrollToId: "CatalougeSectionId" },
-  { navLinkId: "Checkout", scrollToId: "CheckoutSectionId" },
+  { navLinkId: "Brand", scrollToId: "aboutSectionId" },
+  { navLinkId: "Collection", scrollToId: "collectionSectionId" },
+  { navLinkId: "Checkout", scrollToId: "checkoutSectionId" },
 ];
 
 type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> &
@@ -30,47 +28,42 @@ type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> &
 type INavbarProps = OptionalExceptFor<IAboutFields, "navbarTitle">;
 
 const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
-  const onMobile: boolean = useMediaQuery("only screen and (min-width: 750px)");
-
-  const [navColorShade, setNavColorShade] = useState(0.8);
+  const onMobile: boolean = useMediaQuery("only screen and (max-width: 750px)");
 
   const { items } = useContextTypes();
 
   const handleOnCartClick = () => {
-    scrollTo({ id: "CheckoutSectionId", duration: 2000 });
+    scrollTo({ id: "checkoutSectionId", duration: 2000 });
   };
-
-  useEffect(() => {
-    setNavColorShade(1.0);
-  }, [onMobile]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         style={{
           position: "fixed",
-          backgroundColor: `rgba(11, 0, 20, ${navColorShade})`,
-        }}
-        onMouseEnter={() => {
-          setNavColorShade(1.0);
-        }}
-        onMouseLeave={() => {
-          setNavColorShade(onMobile ? 1.0 : 0.8);
+          paddingBottom: "8px",
         }}
       >
         <Toolbar>
-          <GiDiamondHard size="2.5em" />
-          <Typography variant="h6" component="div" sx={{ ml: 2 }}>
-            <a
-              href="https://www.instagram.com/biopolyarka.a/"
-              style={{ textDecoration: "none", color: "inherit" }}
+          <ClientOnlyDiv>
+            <p
+              className="customFont"
+              style={{
+                fontSize: onMobile ? "1.6em" : "2.0em",
+                margin: "4px -2px -2px -2px",
+              }}
             >
-              {navbarTitle}
-            </a>
-          </Typography>
+              <a
+                href="https://www.instagram.com/biopolyarka.a/"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                {navbarTitle}
+              </a>
+            </p>
+          </ClientOnlyDiv>
 
           <ClientOnlyDiv style={{ float: "none", marginLeft: "auto" }}>
-            {onMobile && (
+            {!onMobile && (
               <>
                 {navLinks.map(({ navLinkId, scrollToId }) => (
                   <NavLink
@@ -85,19 +78,30 @@ const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
 
           <ClientOnlyDiv style={{ marginLeft: "auto", paddingTop: "5px" }}>
             <Tooltip title="Корзина">
-              <IconButton
-                size="large"
-                color="inherit"
-                aria-label="cart"
-                onClick={handleOnCartClick}
+              <Badge
+                badgeContent={items.length}
+                color="info"
+                showZero
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
               >
-                <Badge badgeContent={items.length} color="secondary" showZero>
-                  <GiShoppingCart size="1.2em" />
-                </Badge>
-              </IconButton>
+                <IconButton
+                  size="large"
+                  aria-label="cart"
+                  onClick={handleOnCartClick}
+                  style={{
+                    backgroundColor: "white",
+                    marginBottom: "-6px",
+                  }}
+                >
+                  <BsBag size={onMobile ? "0.8em" : "1.0em"} />
+                </IconButton>
+              </Badge>
             </Tooltip>
 
-            {!onMobile && (
+            {onMobile && (
               <Tooltip title="Меню">
                 <IconButton
                   size="large"

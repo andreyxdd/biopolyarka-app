@@ -24,19 +24,17 @@ const StyledSection = styled.section`
   width: 100%;
   height: 100%;
   background-color: #ffffff;
-  padding: 120px 10px 100px 10px;
+  padding: 20px 10px 60px 10px;
 `;
 
 const StyledButton = styled(Button)`
-  background-color: #F0BD6A;
-  color: #181818;
   &:hover {
     background-color: #edae49;
   },
 `;
 
 const CheckoutSection = () => {
-  const { items } = useContextTypes();
+  const { items, setItems } = useContextTypes();
   const checkoutRef = useNavlink("Checkout");
 
   // state and methods to controll the form
@@ -55,13 +53,27 @@ const CheckoutSection = () => {
     } else {
       // contact type and other fields were fulfilled
       console.log("Successfully submited");
+
+      //  updateting local storage
+      const localStorageList = localStorage.getItem("itemsList") || "[]";
+      let itemsList = JSON.parse(localStorageList);
+      itemsList = [];
+      localStorage.setItem("itemsList", JSON.stringify(itemsList));
+
+      // updateting App state
+      setItems([]);
+
+      console.log("Cleared state and local storage");
     }
   };
+
+  const [focusOnContact, setFocusOnContact] = useState(false);
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRadioValue((event.target as HTMLInputElement).value);
     setHelperTextRadio(" ");
     setErrorRadio(false);
+    setFocusOnContact(true);
   };
 
   const [helperTextName, setHelperTextName] = useState("");
@@ -79,16 +91,30 @@ const CheckoutSection = () => {
   const [helperTextContact, setHelperTextContact] = useState("");
   const [errorContact, setErrorContact] = useState(false);
   const handleContactChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (
-      !/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/.test(
-        event.target.value
-      )
-    ) {
-      setHelperTextContact("Entered phone number is incorrect");
-      setErrorContact(true);
+    if (radioValue === "email") {
+      if (
+        !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+          event.target.value
+        )
+      ) {
+        setHelperTextContact("Entered email is incorrect");
+        setErrorContact(true);
+      } else {
+        setHelperTextContact("");
+        setErrorContact(false);
+      }
     } else {
-      setHelperTextContact("");
-      setErrorContact(false);
+      if (
+        !/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/.test(
+          event.target.value
+        )
+      ) {
+        setHelperTextContact("Entered phone number is incorrect");
+        setErrorContact(true);
+      } else {
+        setHelperTextContact("");
+        setErrorContact(false);
+      }
     }
   };
 
@@ -105,15 +131,15 @@ const CheckoutSection = () => {
   }, [items]);
 
   return (
-    <StyledSection ref={checkoutRef} id="CheckoutSectionId">
+    <StyledSection ref={checkoutRef} id="checkoutSectionId">
+      <Divider variant="middle" sx={{ m: 4 }} />
       <Container>
         <Typography variant="h4">Сделать заказ</Typography>
-        <Typography variant="body1" sx={{ mt: 2 }}>
+        <Typography variant="body1" sx={{ mt: 2, pb: 4 }}>
           Вы можете оформить заказ, заполнив форму ниже. Выберите вид связи
           Укажите либо номер телефона для звонка или для связи в конкртеном
           мессенджере, либо email.
         </Typography>
-        <Divider variant="middle" sx={{ m: 4 }} />
         <form onSubmit={handleSubmit}>
           <FormControl
             fullWidth
@@ -215,13 +241,17 @@ const CheckoutSection = () => {
                   error={errorContact}
                   helperText={helperTextContact}
                   autoComplete={radioValue === "email" ? "email" : "tel-local"}
-                  InputProps={{
-                    inputComponent:
-                      radioValue !== "email" && (NumberFormatCustom as any),
-                  }}
+                  InputProps={
+                    radioValue !== "email"
+                      ? {
+                          inputComponent: NumberFormatCustom as any,
+                        }
+                      : {}
+                  }
                   placeholder={radioValue === "email" ? "sample@email.com" : ""}
                   disabled={disabledForm}
                   type={radioValue === "email" ? "email" : "tel"}
+                  autoFocus={focusOnContact}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -298,8 +328,9 @@ const CheckoutSection = () => {
                   variant="contained"
                   type="submit"
                   disabled={disabledForm}
+                  color="primary"
                 >
-                  SUBMIT
+                  Сделать заказ
                 </StyledButton>
               </Grid>
             </Grid>

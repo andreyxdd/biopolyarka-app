@@ -1,13 +1,13 @@
 import React from "react";
 import Navbar from "./Navbar";
 import AboutSection from "./AboutSection";
-import CatalougeSection from "./CatalougeSection";
+import CollectionSection from "./CollectionSection";
 import CheckoutSection from "./CheckoutSection";
 import { IContentfull } from "../types";
 import AppContextProvider from "../context/AppContextProvider";
 import Footer from "./Footer";
 
-const App: React.FC<IContentfull> = ({ aboutContent, catalougeContent }) => {
+const App: React.FC<IContentfull> = ({ aboutContent, collectionContent }) => {
   return (
     <AppContextProvider>
       <Navbar navbarTitle={aboutContent.navbarTitle} />
@@ -16,9 +16,9 @@ const App: React.FC<IContentfull> = ({ aboutContent, catalougeContent }) => {
         image={aboutContent.image}
         description={aboutContent.description}
       />
-      <CatalougeSection catalougeContent={catalougeContent} />
+      <CollectionSection collectionContent={collectionContent} />
       <CheckoutSection />
-      <Footer />
+      <Footer navbarTitle={aboutContent.navbarTitle} />
     </AppContextProvider>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import {
   Card,
@@ -18,8 +18,6 @@ interface IItemCardProps {
 }
 
 const StyledButton = styled(Button)`
-  background-color: #F0BD6A;
-  color: #181818;
   &:hover {
     background-color: #edae49;
   },
@@ -27,10 +25,6 @@ const StyledButton = styled(Button)`
 
 const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
   const { title, price, description, cardImage, material } = data.fields;
-
-  useEffect(() => {
-    console.log(description);
-  }, [description]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -47,18 +41,19 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
 
   return (
     <Card
-      sx={{ width: "100%", borderRadius: 4 }}
+      square
+      sx={{ width: "100%" }}
       style={{
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "column",
         margin: "3px",
-        backgroundColor: "#f9f1f3",
+        backgroundColor: "white",
       }}
     >
       <CardMedia
         component="img"
-        alt="green iguana"
+        alt={`${title} ${material} ${description}`}
         height="300"
         image={`https:${cardImage.fields.file.url}`}
       />
@@ -79,7 +74,7 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
           */}
       </CardContent>
       <CardActions sx={{ justifyContent: "center" }}>
-        <StyledButton onClick={handleClick} variant="contained">
+        <StyledButton onClick={handleClick} color="primary" variant="contained">
           Добавить в корзину
         </StyledButton>
       </CardActions>

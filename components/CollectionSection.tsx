@@ -9,45 +9,44 @@ import { useNavlink } from "../customHooks/useNavlink";
 const StyledSection = styled.section`
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255);
-  background-image: linear-gradient(#773344, #ffffff);
-  padding: 100px 10px 100px 10px;
+  background-color: white;
+  padding: 10px 10px -10px 10px;
 `;
 
-interface ICatalougeSectionProps {
-  catalougeContent: Array<IRing>;
+interface ICollectionSectionProps {
+  collectionContent: Array<IRing>;
 }
 
-const CatalougeSection: React.FC<ICatalougeSectionProps> = ({
-  catalougeContent,
+const CollectionSection: React.FC<ICollectionSectionProps> = ({
+  collectionContent,
 }) => {
   const { setItems } = useContextTypes();
-  const catalougeRef = useNavlink("Catalouge");
+  const collectionRef = useNavlink("Collection");
 
   return (
-    <StyledSection ref={catalougeRef} id="CatalougeSectionId">
+    <StyledSection ref={collectionRef} id="collectionSectionId">
+      <Divider variant="middle" sx={{ m: 4 }} />
       <Container>
-        <Typography variant="h4" style={{ color: "rgb(255,255,255)" }}>
+        <Typography variant="h4" style={{ color: "black" }}>
           Каталог
         </Typography>
         <Typography
           variant="body1"
-          sx={{ mt: 2 }}
-          style={{ color: "rgb(255,255,255,0.8)" }}
+          sx={{ mt: 2, pb: 4 }}
+          style={{ color: "black" }}
         >
           Nam molestie volutpat orci, eget iaculis erat ullamcorper a. Sed
           volutpat tellus diam, ac tempor turpis elementum ut. Proin aliquet,
           lectus non hendrerit bibendum, mauris massa condimentum metus, eu
           facilisis magna justo sed arcu.
         </Typography>
-        <Divider variant="middle" sx={{ m: 4 }} />
         <Grid
           container
           spacing={2}
           justifyContent="space-evenly"
           alignItems="stretch"
         >
-          {catalougeContent.map((catalougeItem: IRing, idx: number) => (
+          {collectionContent.map((catalougeItem: IRing, idx: number) => (
             <Grid
               key={`${catalougeItem.sys.id}-${idx}`}
               item
@@ -70,4 +69,4 @@ const CatalougeSection: React.FC<ICatalougeSectionProps> = ({
   );
 };
 
-export default CatalougeSection;
+export default CollectionSection;

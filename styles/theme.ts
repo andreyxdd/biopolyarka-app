@@ -5,7 +5,11 @@ import { ruRU } from "@mui/material/locale";
 // Create a theme instance
 let theme = createTheme(
   {
-    palette: { secondary: { main: "#f0bd6a" } },
+    palette: {
+      primary: { main: "#ff9e01" },
+      secondary: { main: "#ffffff" },
+      info: { main: "#000000" },
+    },
   },
   ruRU
 );

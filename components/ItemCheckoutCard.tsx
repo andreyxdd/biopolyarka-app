@@ -53,7 +53,7 @@ const ItemCheckoutCard: React.FC<IItemProps> = ({ id, title, price }) => {
             </Typography>
           </Grid>
           <Grid item>
-            <Tooltip title="Remove item" placement="right">
+            <Tooltip title="Удалить из корзины" placement="right">
               <IconButton
                 size="large"
                 color="inherit"

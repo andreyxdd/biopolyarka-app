@@ -19,13 +19,13 @@ export async function getStaticProps() {
     await client.getEntry(process.env.CONTENTFUL_ABOUT_ENTRY_ID as string)
   ).fields;
 
-  const catalougeContent = (await client.getEntries({ content_type: "ring" }))
+  const collectionContent = (await client.getEntries({ content_type: "ring" }))
     .items;
 
   return {
     props: {
       aboutContent,
-      catalougeContent,
+      collectionContent,
     },
   };
 }
@@ -36,10 +36,10 @@ export async function getStaticProps() {
  */
 const Home: NextPage<IContentfull> = ({
   aboutContent,
-  catalougeContent,
+  collectionContent,
 }): JSX.Element => {
   return (
-    <App aboutContent={aboutContent} catalougeContent={catalougeContent} />
+    <App aboutContent={aboutContent} collectionContent={collectionContent} />
   );
 };
 

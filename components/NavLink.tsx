@@ -26,16 +26,16 @@ const NavLink: React.FC<INavLinkProps> = ({ navLinkId, scrollToId }) => {
       <style jsx>{`
         span {
           font-size: 18px;
-          border-bottom: 1px solid transparent;
-          transition: border-bottom 0.2s ease;
+          border-bottom: 2px solid transparent;
+          transition: border-bottom 0.15s ease;
           transition-delay: 0.25s;
           margin: 1em;
-          padding-bottom: 0.3em;
+          padding-bottom: 0.5em;
         }
 
         span:hover {
           cursor: pointer;
-          border-bottom: 1px solid white;
+          border-bottom: 2px solid white;
         }
 
         span.activeClass {

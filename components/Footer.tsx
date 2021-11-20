@@ -1,38 +1,62 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Divider, Typography } from "@mui/material";
-import { FaFacebookSquare, FaInstagram } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { IAboutFields } from "../@types/generated/contentful";
+
+import { useMediaQuery } from "@react-hook/media-query";
 
 const StyledFooter = styled.footer`
   text-align: center;
   padding: 3px;
-  background-color: #0b0014;
+  background-color: #000000;
   color: white;
+  position: relative;
 `;
 
-const Footer = () => {
+type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> &
+  Pick<T, TRequired>;
+
+type IFooterProps = OptionalExceptFor<IAboutFields, "navbarTitle">;
+
+const Footer: React.FC<IFooterProps> = ({ navbarTitle }) => {
+  const onMobile: boolean = useMediaQuery("only screen and (max-width: 750px)");
   return (
     <StyledFooter>
-      <Typography variant="body2" sx={{ p: 2 }}>
-        Подписывайтесь на нас:
-      </Typography>
+      <p
+        className="customFont"
+        style={{
+          fontSize: onMobile ? "1.6em" : "2.0em",
+          margin: "4px -2px -2px -2px",
+          color: "#ff9e01",
+          position: "absolute",
+          left: "14px",
+        }}
+      >
+        {navbarTitle}
+      </p>
+
       <a
         href="https://www.instagram.com/biopolyarka.a/"
-        style={{ textDecoration: "none", color: "inherit" }}
+        style={{
+          textDecoration: "none",
+          color: "inherit",
+          position: onMobile ? "absolute" : "static",
+          right: onMobile ? "14px" : "0px",
+        }}
       >
-        <FaFacebookSquare size="3em" style={{ margin: "4px 10px 4px 10px" }} />
+        <FaInstagram size="3em" style={{ margin: "6px 10px 4px 10px" }} />
       </a>
-      <a
-        href="https://www.instagram.com/biopolyarka.a/"
-        style={{ textDecoration: "none", color: "inherit" }}
+
+      <Divider
+        variant="middle"
+        sx={{ m: 1, color: "secondary", pt: onMobile ? "50px" : "0px" }}
       >
-        <FaInstagram size="3em" style={{ margin: "4px 10px 4px 10px" }} />
-      </a>
-      <Divider variant="middle" sx={{ m: 1 }} />
-      <Typography variant="caption">
-        Copyright @ {new Date().getFullYear()}
-      </Typography>
-      <br />
+        <Typography variant="caption">
+          Copyright @ {new Date().getFullYear()}
+        </Typography>
+      </Divider>
+
       <Typography variant="caption">
         Proudly created by{" "}
         <a
