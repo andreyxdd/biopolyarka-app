@@ -66,7 +66,7 @@ const CheckoutSection = () => {
       setItems([]);
       setOpen(true);
 
-      console.log("Cleared state and local storage");
+      console.log("Cleared state and local storage!");
     }
   };
 
