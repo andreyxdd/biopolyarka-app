@@ -10,6 +10,10 @@ let theme = createTheme(
       secondary: { main: "#ffffff" },
       info: { main: "#000000" },
     },
+    typography: {
+      h4: { fontFamily: ['"Playfair Display"', "serif"].join(",") },
+      h6: { fontFamily: ['"Playfair Display"', "serif"].join(",") },
+    },
   },
   ruRU
 );

@@ -28,3 +28,9 @@ a {
 .customFont {
   font-family: "Milka Free W05 Regular";
 }
+
+/* Import Swiper styles */
+@import "../node_modules/swiper/swiper-bundle.min.css";
+:root {
+  --swiper-theme-color: #ffffff !important;
+}

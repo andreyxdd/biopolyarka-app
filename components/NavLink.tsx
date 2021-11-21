@@ -36,11 +36,13 @@ const NavLink: React.FC<INavLinkProps> = ({
       {navLinkId}
       <style jsx>{`
         .spanPC {
+          font-family: "Playfair Display", serif;
+          font-weight: 600;
           font-size: 18px;
           border-bottom: 2px solid transparent;
           transition: border-bottom 0.15s ease;
           transition-delay: 0.25s;
-          margin: 1em;
+          margin: 3vw;
           padding-bottom: 0.5em;
         }
 

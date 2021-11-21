@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import ItemCard from "./ItemCard";
-import { Grid, Container, Typography } from "@mui/material";
+import { Grid, Container, Typography, Divider } from "@mui/material";
 import { IRing } from "../@types/generated/contentful";
 import { useContextTypes } from "../customHooks/useContextTypes";
 import { useNavlink } from "../customHooks/useNavlink";
@@ -25,6 +25,7 @@ const CollectionSection: React.FC<ICollectionSectionProps> = ({
 
   return (
     <StyledSection ref={collectionRef} id="collectionSectionId">
+      <Divider variant="middle" sx={{ m: 4 }} />
       <Container>
         <Typography variant="h4" style={{ color: "black" }}>
           Collection

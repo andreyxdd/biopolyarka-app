@@ -75,7 +75,9 @@ const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
             </p>
           </ClientOnlyDiv>
 
-          <ClientOnlyDiv style={{ float: "none", marginLeft: "auto" }}>
+          <ClientOnlyDiv
+            style={{ float: "none", marginLeft: "auto", marginRight: "auto" }}
+          >
             {!onMobile && (
               <>
                 {navLinks.map(({ navLinkId, scrollToId }) => (
@@ -140,7 +142,7 @@ const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
                   MenuListProps={{
                     "aria-labelledby": "basic-button",
                   }}
-                  style={{ marginTop: "14px", marginLeft: "14px" }}
+                  style={{ marginTop: "15px", marginLeft: "11px" }}
                 >
                   {navLinks.map(({ navLinkId, scrollToId }) => (
                     <MenuItem

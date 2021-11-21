@@ -13,18 +13,20 @@ import {
   RadioGroup,
   Radio,
   Button,
+  Snackbar,
 } from "@mui/material";
 import { useContextTypes } from "../customHooks/useContextTypes";
 import { useNavlink } from "../customHooks/useNavlink";
 import ItemCheckoutCard from "./ItemCheckoutCard";
 import { IItemProps } from "../types";
 import NumberFormatCustom from "./NumberFormatCustom";
+import Alert from "./Alert";
 
 const StyledSection = styled.section`
   width: 100%;
   height: 100%;
   background-color: #ffffff;
-  padding: 20px 10px 60px 10px;
+  padding: 20px 10px 120px 10px;
 `;
 
 const StyledButton = styled(Button)`
@@ -48,7 +50,7 @@ const CheckoutSection = () => {
 
     if (!radioValue) {
       // contact type is not selected
-      setHelperTextRadio("Please select a conact type.");
+      setHelperTextRadio("Пожалуйста выберите вид связи");
       setErrorRadio(true);
     } else {
       // contact type and other fields were fulfilled
@@ -62,6 +64,7 @@ const CheckoutSection = () => {
 
       // updateting App state
       setItems([]);
+      setOpen(true);
 
       console.log("Cleared state and local storage");
     }
@@ -130,11 +133,21 @@ const CheckoutSection = () => {
     }
   }, [items]);
 
+  // Alert states
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <StyledSection ref={checkoutRef} id="checkoutSectionId">
       <Divider variant="middle" sx={{ m: 4 }} />
       <Container>
-        <Typography variant="h4">Сделать заказ</Typography>
+        <Typography variant="h4">Checkout</Typography>
         <Typography variant="body1" sx={{ mt: 2, pb: 4 }}>
           Вы можете оформить заказ, заполнив форму ниже. Выберите вид связи
           Укажите либо номер телефона для звонка или для связи в конкртеном
@@ -337,6 +350,17 @@ const CheckoutSection = () => {
           </FormControl>
         </form>
       </Container>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        sx={{ bottom: { xs: 140, sm: 150 } }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Заказ успешно оформлен. Скоро мы с вами свяжемся!
+        </Alert>
+      </Snackbar>
     </StyledSection>
   );
 };

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import {
   Card,
+  CardHeader,
   CardActions,
   CardContent,
   CardMedia,
@@ -13,14 +14,13 @@ import { IItemProps } from "../types";
 import ClientOnlyDiv from "./ClientOnlyDiv";
 
 // import Swiper core and required modules
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+import SwiperCore, { Pagination, Scrollbar, A11y } from "swiper";
+SwiperCore.use([Pagination, Scrollbar, A11y]);
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 interface IItemCardProps {
@@ -30,13 +30,14 @@ interface IItemCardProps {
 }
 
 const StyledButton = styled(Button)`
+  font-size: 13px;
   &:hover {
     background-color: #edae49;
   },
 `;
 
 const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
-  const { title, price, description, cardImage, material } = data.fields;
+  const { title, price, description, cardImages, material } = data.fields;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -63,30 +64,48 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
         backgroundColor: "white",
       }}
     >
+      <CardHeader
+        title={
+          <Typography
+            variant="h6"
+            component="div"
+            align="center"
+            style={{ fontWeight: 600 }}
+          >
+            {title}
+          </Typography>
+        }
+      />
       <ClientOnlyDiv>
         <Swiper
           grabCursor
           keyboard={{ enabled: true }}
           pagination={{ clickable: true }}
-          navigation
         >
-          {[1, 2, 3].map((val, idx) => (
-            <SwiperSlide key={val * idx}>
+          {cardImages.map((ringImage, idx) => (
+            <SwiperSlide key={`${ringImage.sys.createdAt}-${idx}`}>
               <CardMedia
                 component="img"
                 alt={`${title} ${material} ${description}`}
                 height="300"
-                image={`https:${cardImage.fields.file.url}`}
+                image={`https:${ringImage.fields.file.url}`}
               />
             </SwiperSlide>
           ))}
         </Swiper>
+        <style jsx>{`
+          .swiper-pagination >>> .swiper-pagination-bullet {
+            opacity: 1 !important;
+            border: white solid 1px !important;
+            background-color: transparent !important;
+          }
+          .swiper-pagination >>> .swiper-pagination-bullet-active {
+            background-color: white !important;
+          }
+        `}</style>
       </ClientOnlyDiv>
 
       <CardContent>
-        <Typography variant="h6" component="div" align="center">
-          {title}
-        </Typography>
         <Typography variant="body1" color="text.secondary">
           Стоимость: {price} руб.
         </Typography>

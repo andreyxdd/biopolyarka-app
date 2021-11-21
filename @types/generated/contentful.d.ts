@@ -51,6 +51,9 @@ export interface IRingFields {
 
   /** Material */
   material?: string | undefined;
+
+  /** Card Images */
+  cardImages: Asset[];
 }
 
 /** Модель для создания карточек с инофрмацией о кольцах. */
