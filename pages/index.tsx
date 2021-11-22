@@ -16,6 +16,9 @@ export async function getStaticProps() {
   const aboutContent = await getContentfulAboutData();
   const collectionContent = await getContentfulCollectionData();
 
+  console.log(aboutContent);
+  console.log(collectionContent);
+
   return {
     props: {
       aboutContent,
