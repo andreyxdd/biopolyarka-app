@@ -22,12 +22,6 @@ export async function getStaticProps() {
   const collectionContent = (await client.getEntries({ content_type: "ring" }))
     .items;
 
-  if (!aboutContent || !collectionContent) {
-    return {
-      notFound: true,
-    };
-  }
-
   return {
     props: {
       aboutContent,
