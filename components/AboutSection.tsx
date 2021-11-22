@@ -10,7 +10,7 @@ const StyledSection = styled.section`
   width: 100%;
   height: 100vh;
   background-color: #ffffff;
-  padding-top: 1vh;
+  padding-top: 8vh;
   padding-bottom: 1.2vh;
   display: flex;
   align-items: center;
@@ -54,7 +54,7 @@ const AboutSection: React.FC<IAboutFields> = ({
               {navbarTitle}
             </p>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={5}>
             <Image
               src={"https:" + image.fields.file.url}
               alt={`Boss Venera ${title}`}
@@ -64,7 +64,8 @@ const AboutSection: React.FC<IAboutFields> = ({
           </Grid>
           <Grid
             item
-            xs={8}
+            xs={12}
+            sm={7}
             container
             direction="column"
             justifyContent="center"

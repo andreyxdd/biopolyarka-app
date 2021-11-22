@@ -82,7 +82,7 @@ const CheckoutSection = () => {
   const [helperTextName, setHelperTextName] = useState("");
   const [errorName, setErrorName] = useState(false);
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!/^[a-zA-Z\s]*$/.test(event.target.value)) {
+    if (!/^[a-zA-Zа-яА-Я\s-]*$/.test(event.target.value)) {
       setHelperTextName("Пожалуйста, используйте только буквы в этом поле");
       setErrorName(true);
     } else {

@@ -7,7 +7,7 @@ import App from "../components/App";
 import { IContentfull } from "../types";
 
 /**
- * Get static properties from the contentful API
+ * Get server side properties from the contentful API
  */
 export async function getStaticProps() {
   const client = createClient({
@@ -22,11 +22,18 @@ export async function getStaticProps() {
   const collectionContent = (await client.getEntries({ content_type: "ring" }))
     .items;
 
+  if (!aboutContent || !collectionContent) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       aboutContent,
       collectionContent,
     },
+    revalidate: 1,
   };
 }
 
