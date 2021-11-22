@@ -2,32 +2,26 @@ import type { NextPage } from "next";
 // import Head from "next/head";
 // import styles from "../styles/Home.module.css";
 import React from "react";
-import { createClient } from "contentful";
+import {
+  getContentfulAboutData,
+  getContentfulCollectionData,
+} from "../lib/api";
 import App from "../components/App";
 import { IContentfull } from "../types";
-
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID as string,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
-});
 
 /**
  * Get server side properties from the contentful API
  */
 export async function getStaticProps() {
-  const aboutContent = (
-    await client.getEntry(process.env.CONTENTFUL_ABOUT_ENTRY_ID as string)
-  ).fields;
-
-  const collectionContent = (await client.getEntries({ content_type: "ring" }))
-    .items;
+  const aboutContent = await getContentfulAboutData();
+  const collectionContent = await getContentfulCollectionData();
 
   return {
     props: {
       aboutContent,
       collectionContent,
     },
-    revalidate: 1,
+    revalidate: 10,
   };
 }
 
