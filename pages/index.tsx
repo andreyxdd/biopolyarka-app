@@ -6,15 +6,15 @@ import { createClient } from "contentful";
 import App from "../components/App";
 import { IContentfull } from "../types";
 
+const client = createClient({
+  space: process.env.CONTENTFUL_SPACE_ID as string,
+  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
+});
+
 /**
  * Get server side properties from the contentful API
  */
 export async function getStaticProps() {
-  const client = createClient({
-    space: process.env.CONTENTFUL_SPACE_ID as string,
-    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
-  });
-
   const aboutContent = (
     await client.getEntry(process.env.CONTENTFUL_ABOUT_ENTRY_ID as string)
   ).fields;
