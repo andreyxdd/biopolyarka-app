@@ -21,7 +21,13 @@ const Notfound = () => {
         direction="column"
         justifyContent="center"
       >
-        <Grid item alignItems="center" direction="row" justifyContent="center">
+        <Grid
+          container
+          item
+          alignItems="center"
+          direction="row"
+          justifyContent="center"
+        >
           <span className="err">4</span>
           <i className="far fa-question-circle fa-spin" />
           <span className="err">4</span>

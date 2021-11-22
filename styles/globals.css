@@ -30,7 +30,7 @@ a {
 }
 
 /* Import Swiper styles */
-@import "../node_modules/swiper/swiper-bundle.min.css";
+@import "swiper/css";
 :root {
   --swiper-theme-color: #ffffff !important;
 }
