@@ -29,8 +29,11 @@ a {
   font-family: "Milka Free W05 Regular";
 }
 
-/* Import Swiper styles */
-@import "swiper/css";
-:root {
-  --swiper-theme-color: #ffffff !important;
+.slick-dots li button:before {
+  font-size: 10px !important;
+}
+
+.slick-dots li.slick-active button:before {
+  opacity: 0.75;
+  color: #fff;
 }

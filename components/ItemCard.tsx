@@ -12,17 +12,7 @@ import {
 import { IRing } from "../@types/generated/contentful";
 import { IItemProps } from "../types";
 import ClientOnlyDiv from "./ClientOnlyDiv";
-
-// import Swiper core and required modules
-import SwiperCore, { Pagination, Scrollbar, A11y } from "swiper";
-SwiperCore.use([Pagination, Scrollbar, A11y]);
-
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
+import Slider from "react-slick";
 interface IItemCardProps {
   data: IRing;
   setItems: React.Dispatch<React.SetStateAction<Array<IItemProps>>>;
@@ -52,6 +42,23 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
     setItems((items) => [...items, { title, price, id }]);
   };
 
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    appendDots: (dots: React.ReactNode) => (
+      <div
+        style={{
+          bottom: "20px",
+        }}
+      >
+        <ul style={{ padding: "0px", margin: "0px" }}> {dots} </ul>
+      </div>
+    ),
+  };
+
   return (
     <Card
       square
@@ -77,32 +84,17 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
         }
       />
       <ClientOnlyDiv>
-        <Swiper
-          grabCursor
-          keyboard={{ enabled: true }}
-          pagination={{ clickable: true }}
-        >
+        <Slider {...settings}>
           {cardImages.map((ringImage, idx) => (
-            <SwiperSlide key={`${ringImage.sys.createdAt}-${idx}`}>
-              <CardMedia
-                component="img"
-                alt={`${title} ${material} ${description}`}
-                height="300"
-                image={`https:${ringImage.fields.file.url}`}
-              />
-            </SwiperSlide>
+            <CardMedia
+              component="img"
+              alt={`${title} ${material} ${description}`}
+              height="300"
+              image={`https:${ringImage.fields.file.url}`}
+              key={`${ringImage.sys.createdAt}-${idx}`}
+            />
           ))}
-        </Swiper>
-        <style jsx>{`
-          .swiper-pagination >>> .swiper-pagination-bullet {
-            opacity: 1 !important;
-            border: white solid 1px !important;
-            background-color: transparent !important;
-          }
-          .swiper-pagination >>> .swiper-pagination-bullet-active {
-            background-color: white !important;
-          }
-        `}</style>
+        </Slider>
       </ClientOnlyDiv>
 
       <CardContent>
