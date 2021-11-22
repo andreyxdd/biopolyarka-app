@@ -75,9 +75,7 @@ const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
             </p>
           </ClientOnlyDiv>
 
-          <ClientOnlyDiv
-            style={{ float: "none", marginLeft: "auto", marginRight: "auto" }}
-          >
+          <ClientOnlyDiv style={{ float: "none", marginLeft: "auto" }}>
             {!onMobile && (
               <>
                 {navLinks.map(({ navLinkId, scrollToId }) => (

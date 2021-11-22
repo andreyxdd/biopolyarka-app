@@ -6,7 +6,7 @@ const client = createClient({
 });
 
 /**
- * This function returns the repond from the Contentful-api of "About" content model (only one entry)
+ * This function returns data for "About" content model (only one entry) from the Contentful-api
  * @return {Object}
  */
 export async function getContentfulAboutData() {
@@ -18,7 +18,7 @@ export async function getContentfulAboutData() {
 }
 
 /**
- * This function returns the repond from the Contentful-api of "Ring" content model (multiple entries)
+ * This function returns data for "Ring" content model (multiple entries) from the Contentful-api
  * @return {Object}
  */
 export async function getContentfulCollectionData() {
