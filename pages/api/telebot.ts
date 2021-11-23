@@ -14,12 +14,20 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const TeleBot = require("../../telebot/lib/telebot.js");
-  const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
+  const TelegramBot = require("telegrambot");
+  const api = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN);
+
+  // Update the offset to the last receive update_id + 1
+  api.invoke(
+    "getUpdates",
+    { offset: 0 },
+    function (err: string, updates: Object) {
+      if (err) throw err;
+      console.log(updates);
+    }
+  );
 
   const body = JSON.parse(req.body);
-
-  bot.start();
 
   const messageText = `
   A new order has been recieved via BIOPOLYARKA APP:
@@ -30,9 +38,13 @@ export default function handler(
   Order details: ${body.orderDetails}
   `;
 
-  bot.sendMessage(process.env.TELEGRAM_CHAT_ID, messageText);
+  api.sendMessage(
+    { chat_id: process.env.TELEGRAM_CHAT_ID, text: messageText },
+    function (err: string, message: Object) {
+      if (err) throw err;
+      console.log(message);
+    }
+  );
 
-  console.log(messageText);
-
-  res.status(200).json(body);
+  res.status(200).json({ name: "John Doe" });
 }

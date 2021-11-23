@@ -33,7 +33,7 @@
     "react-number-format": "^4.8.0",
     "react-slick": "^0.28.1",
     "slick-carousel": "^1.8.1",
-    "telebot": "./telebot"
+    "telegrambot": "^0.1.0"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.3.0",
