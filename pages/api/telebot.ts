@@ -18,14 +18,10 @@ export default function handler(
   const api = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN);
 
   // Update the offset to the last receive update_id + 1
-  api.invoke(
-    "getUpdates",
-    { offset: 0 },
-    function (err: string, updates: Object) {
-      if (err) throw err;
-      console.log(updates);
-    }
-  );
+  api.invoke("getUpdates", { offset: 0 }, function (err: any, updates: any) {
+    if (err) throw err;
+    console.log(updates);
+  });
 
   const body = JSON.parse(req.body);
 
@@ -40,11 +36,13 @@ export default function handler(
 
   api.sendMessage(
     { chat_id: process.env.TELEGRAM_CHAT_ID, text: messageText },
-    function (err: string, message: Object) {
+    function (err: any, message: any) {
       if (err) throw err;
       console.log(message);
     }
   );
+
+  console.log(messageText);
 
   res.status(200).json({ name: "John Doe" });
 }
