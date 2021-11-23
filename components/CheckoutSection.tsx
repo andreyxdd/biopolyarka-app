@@ -39,13 +39,20 @@ const CheckoutSection = () => {
   const { items, setItems } = useContextTypes();
   const checkoutRef = useNavlink("Checkout");
 
+  const [order, setOrder] = useState({
+    clientName: "",
+    contactType: "",
+    contactDetails: "",
+    orderDetails: "",
+  });
+
   // state and methods to controll the form
 
   const [radioValue, setRadioValue] = useState("");
   const [helperTextRadio, setHelperTextRadio] = useState("");
   const [errorRadio, setErrorRadio] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!radioValue) {
@@ -55,6 +62,12 @@ const CheckoutSection = () => {
     } else {
       // contact type and other fields were fulfilled
       console.log("Successfully submited");
+
+      // sending order details to telegram bot
+      fetch("/api/telebot", {
+        method: "post",
+        body: JSON.stringify(order),
+      });
 
       //  updateting local storage
       const localStorageList = localStorage.getItem("itemsList") || "[]";
@@ -77,17 +90,27 @@ const CheckoutSection = () => {
     setHelperTextRadio(" ");
     setErrorRadio(false);
     setFocusOnContact(true);
+    setOrder({
+      ...order,
+      contactType: (event.target as HTMLInputElement).value,
+    });
   };
 
   const [helperTextName, setHelperTextName] = useState("");
   const [errorName, setErrorName] = useState(false);
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!/^[a-zA-Zа-яА-Я\s-]*$/.test(event.target.value)) {
+    if (
+      !/^[a-zA-Zа-яА-Я\s-]*$/.test((event.target as HTMLInputElement).value)
+    ) {
       setHelperTextName("Пожалуйста, используйте только буквы в этом поле");
       setErrorName(true);
     } else {
       setHelperTextName("");
       setErrorName(false);
+      setOrder({
+        ...order,
+        clientName: (event.target as HTMLInputElement).value,
+      });
     }
   };
 
@@ -105,11 +128,15 @@ const CheckoutSection = () => {
       } else {
         setHelperTextContact("");
         setErrorContact(false);
+        setOrder({
+          ...order,
+          contactDetails: (event.target as HTMLInputElement).value,
+        });
       }
     } else {
       if (
         !/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/.test(
-          event.target.value
+          (event.target as HTMLInputElement).value
         )
       ) {
         setHelperTextContact("Номер телефона введен некорректно");
@@ -117,6 +144,10 @@ const CheckoutSection = () => {
       } else {
         setHelperTextContact("");
         setErrorContact(false);
+        setOrder({
+          ...order,
+          contactDetails: (event.target as HTMLInputElement).value,
+        });
       }
     }
   };
@@ -130,6 +161,10 @@ const CheckoutSection = () => {
     } else {
       setDisabledForm(false);
       setTotalPrice(items.reduce((a, c) => a + c?.price, 0));
+      setOrder({
+        ...order,
+        orderDetails: items.map((item) => item.title).join(" "),
+      });
     }
   }, [items]);
 
