@@ -6,7 +6,6 @@ The easy way to write Telegram bots.
 
 [![TeleBot 2.0](https://img.shields.io/badge/dev-TeleBot%202%2e0-ff0061.svg)](https://github.com/mullwar/telebot/tree/version-2) [![TeleBot Examples](https://img.shields.io/badge/telebot-examples-blue.svg)](https://github.com/mullwar/telebot/tree/master/examples) [![TeleBot Bot](https://img.shields.io/badge/telebot-community%20bot-blue.svg)](https://github.com/mullwar/telebot-bot) [![TeleBot Group](https://img.shields.io/badge/telebot-community%20group-blue.svg)](https://goo.gl/gXvm12)
 
-
 **Library features:**
 
 - 🍎 Simple. Easy to use.
@@ -36,49 +35,52 @@ yarn add telebot
 Import `telebot` module and create a new bot object:
 
 ```js
-const TeleBot = require('telebot');
+const TeleBot = require("telebot");
 
 const bot = new TeleBot({
-    token: TELEGRAM_BOT_TOKEN, // Required. Telegram Bot API token.
-    polling: { // Optional. Use polling.
-        interval: 1000, // Optional. How often check updates (in ms).
-        timeout: 0, // Optional. Update polling timeout (0 - short polling).
-        limit: 100, // Optional. Limits the number of updates to be retrieved.
-        retryTimeout: 5000, // Optional. Reconnecting timeout (in ms).
-        proxy: 'http://username:password@yourproxy.com:8080' // Optional. An HTTP proxy to be used.
-    },
-    webhook: { // Optional. Use webhook instead of polling.
-        key: 'key.pem', // Optional. Private key for server.
-        cert: 'cert.pem', // Optional. Public key.
-        url: 'https://....', // HTTPS url to send updates to.
-        host: '0.0.0.0', // Webhook server host.
-        port: 443, // Server port.
-        maxConnections: 40 // Optional. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
-    },
-    allowedUpdates: [], // Optional. List the types of updates you want your bot to receive. Specify an empty list to receive all updates.
-    usePlugins: ['askUser'], // Optional. Use user plugins from pluginFolder.
-    pluginFolder: '../plugins/', // Optional. Plugin folder location.
-    pluginConfig: { // Optional. Plugin configuration.
-        // myPluginName: {
-        //   data: 'my custom value'
-        // }
-    }
+  token: TELEGRAM_BOT_TOKEN, // Required. Telegram Bot API token.
+  polling: {
+    // Optional. Use polling.
+    interval: 1000, // Optional. How often check updates (in ms).
+    timeout: 0, // Optional. Update polling timeout (0 - short polling).
+    limit: 100, // Optional. Limits the number of updates to be retrieved.
+    retryTimeout: 5000, // Optional. Reconnecting timeout (in ms).
+    proxy: "http://username:password@yourproxy.com:8080", // Optional. An HTTP proxy to be used.
+  },
+  webhook: {
+    // Optional. Use webhook instead of polling.
+    key: "key.pem", // Optional. Private key for server.
+    cert: "cert.pem", // Optional. Public key.
+    url: "https://....", // HTTPS url to send updates to.
+    host: "0.0.0.0", // Webhook server host.
+    port: 443, // Server port.
+    maxConnections: 40, // Optional. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
+  },
+  allowedUpdates: [], // Optional. List the types of updates you want your bot to receive. Specify an empty list to receive all updates.
+  usePlugins: ["askUser"], // Optional. Use user plugins from pluginFolder.
+  pluginFolder: "../plugins/", // Optional. Plugin folder location.
+  pluginConfig: {
+    // Optional. Plugin configuration.
+    // myPluginName: {
+    //   data: 'my custom value'
+    // }
+  },
 });
 ```
 
 Or just:
 
 ```js
-const TeleBot = require('telebot');
+const TeleBot = require("telebot");
 const bot = new TeleBot(TELEGRAM_BOT_TOKEN);
 ```
 
-*Don't forget to insert your [Telegram Bot API](https://core.telegram.org/bots#create-a-new-bot) token key.*
+_Don't forget to insert your [Telegram Bot API](https://core.telegram.org/bots#create-a-new-bot) token key._
 
 To start polling updates, use `bot.start()`.
 
 ```js
-bot.on('text', (msg) => msg.reply.text(msg.text));
+bot.on("text", (msg) => msg.reply.text(msg.text));
 
 bot.start();
 ```
@@ -90,14 +92,14 @@ We just created echo bot!
 Send text on `/start` or `/hello` command:
 
 ```js
-bot.on(['/start', '/hello'], (msg) => msg.reply.text('Welcome!'));
+bot.on(["/start", "/hello"], (msg) => msg.reply.text("Welcome!"));
 ```
 
 When sticker received, reply back:
 
 ```js
-bot.on('sticker', (msg) => {
-    return msg.reply.sticker('http://i.imgur.com/VRYdhuD.png', { asReply: true });
+bot.on("sticker", (msg) => {
+  return msg.reply.sticker("http://i.imgur.com/VRYdhuD.png", { asReply: true });
 });
 ```
 
@@ -105,7 +107,7 @@ Sends photo on "show kitty" or "kitty" text message (using RegExp):
 
 ```js
 bot.on(/(show\s)?kitty*/, (msg) => {
-    return msg.reply.photo('http://thecatapi.com/api/images/get');
+  return msg.reply.photo("http://thecatapi.com/api/images/get");
 });
 ```
 
@@ -113,22 +115,22 @@ Command with arguments `/say <your message>`:
 
 ```js
 bot.on(/^\/say (.+)$/, (msg, props) => {
-    const text = props.match[1];
-    return bot.sendMessage(msg.from.id, text, { replyToMessage: msg.message_id });
+  const text = props.match[1];
+  return bot.sendMessage(msg.from.id, text, { replyToMessage: msg.message_id });
 });
 ```
 
 When message was edited:
 
 ```js
-bot.on('edit', (msg) => {
-    return msg.reply.text('I saw it! You edited message!', { asReply: true });
+bot.on("edit", (msg) => {
+  return msg.reply.text("I saw it! You edited message!", { asReply: true });
 });
 ```
 
-*Note: `msg.reply` is a bot method shortcut, part of [shortReply](/plugins/shortReply.js) build-in plugin.*
+_Note: `msg.reply` is a bot method shortcut, part of [shortReply](/plugins/shortReply.js) build-in plugin._
 
-***[See more examples!](/examples)***
+**_[See more examples!](/examples)_**
 
 ## ⏰ Events
 
@@ -137,22 +139,22 @@ Use `bot.on(<event>, <function>)` to handle all possible TeleBot events.
 For example, to catch a command, just add a slash:
 
 ```js
-bot.on('/hello', (msg) => {
-  return bot.sendMessage(msg.from.id, `Hello, ${ msg.from.first_name }!`);
+bot.on("/hello", (msg) => {
+  return bot.sendMessage(msg.from.id, `Hello, ${msg.from.first_name}!`);
 });
 ```
 
 Also, you can catch multiple events:
 
 ```js
-bot.on(['/start', 'audio', 'sticker'], msg => {
-  return bot.sendMessage(msg.from.id, 'Bam!');
+bot.on(["/start", "audio", "sticker"], (msg) => {
+  return bot.sendMessage(msg.from.id, "Bam!");
 });
 ```
 
 ### TeleBot events:
 
-- **/&#42;** – any user command
+- **/\*** – any user command
 - **/\<cmd\>** – on specific command
 - **start** – bot started
 - **stop** – bot stopped
@@ -169,11 +171,11 @@ bot.on(['/start', 'audio', 'sticker'], msg => {
 
 #### Events:
 
-*keyboard*, *button*, *inlineKeyboard*, *inlineQueryKeyboard*, *inlineButton*, *answerList*, *getMe*, *sendMessage*, *deleteMessage*, *forwardMessage*, *sendPhoto*, *sendAudio*, *sendDocument*, *sendSticker*, *sendVideo*, *sendVideoNote*, *sendVoice*, *sendLocation*, *sendVenue*, *sendContact*, *sendChatAction*, *getUserProfilePhotos*, *getFile*, *kickChatMember*, *unbanChatMember*, *answerInlineQuery*, *answerCallbackQuery*, *answerShippingQuery*, *answerPreCheckoutQuery*, *editMessageText*, *editMessageMedia*, *editMessageCaption*, *editMessageReplyMarkup*, *setWebhook*
+_keyboard_, _button_, _inlineKeyboard_, _inlineQueryKeyboard_, _inlineButton_, _answerList_, _getMe_, _sendMessage_, _deleteMessage_, _forwardMessage_, _sendPhoto_, _sendAudio_, _sendDocument_, _sendSticker_, _sendVideo_, _sendVideoNote_, _sendVoice_, _sendLocation_, _sendVenue_, _sendContact_, _sendChatAction_, _getUserProfilePhotos_, _getFile_, _kickChatMember_, _unbanChatMember_, _answerInlineQuery_, _answerCallbackQuery_, _answerShippingQuery_, _answerPreCheckoutQuery_, _editMessageText_, _editMessageMedia_, _editMessageCaption_, _editMessageReplyMarkup_, _setWebhook_
 
 ### Telegram message events:
 
-- **&#42;** - any type of message
+- **\*** - any type of message
 - **text** – text message
 - **audio** – audio file
 - **voice** – voice message
@@ -204,16 +206,16 @@ bot.on(['/start', 'audio', 'sticker'], msg => {
 - **successfulPayment** – message is a service message about a successful payment
 - **passportData** – Telegram Passport data
 
-*Read more about Telegram Bot API response types: https://core.telegram.org/bots/api#available-types*
+_Read more about Telegram Bot API response types: https://core.telegram.org/bots/api#available-types_
 
 ## 🚜 Modifiers
 
 You can add modifier to process data before passing it to event.
 
 ```js
-bot.mod('text', (data) => {
+bot.mod("text", (data) => {
   let msg = data.message;
-  msg.text = `📢 ${ msg.text }`;
+  msg.text = `📢 ${msg.text}`;
   return data;
 });
 ```
@@ -234,31 +236,31 @@ Use `usePlugins` config option to load plugins from `pluginFolder` directory:
 
 ```js
 const bot = new TeleBot({
-    token: 'TELEGRAM_BOT_TOKEN',
-    usePlugins: ['askUser', 'commandButtons'],
-    pluginFolder: '../plugins/',
-    pluginConfig: {
-        // Plugin configs
-    }
+  token: "TELEGRAM_BOT_TOKEN",
+  usePlugins: ["askUser", "commandButtons"],
+  pluginFolder: "../plugins/",
+  pluginConfig: {
+    // Plugin configs
+  },
 });
 ```
 
 Or use `plug(require(<plugin_path>))` to plug an external plugin.
 
-***[Check out build-in plugin folder!](/plugins)***
+**_[Check out build-in plugin folder!](/plugins)_**
 
 ### Plugin structure
 
 ```js
 module.exports = {
-    id: 'myPlugin', // Unique plugin name
-    defaultConfig: {
-        // Default plugin config
-        key: 'value'
-    },
-    plugin(bot, pluginConfig) {
-        // Plugin code
-    }
+  id: "myPlugin", // Unique plugin name
+  defaultConfig: {
+    // Default plugin config
+    key: "value",
+  },
+  plugin(bot, pluginConfig) {
+    // Plugin code
+  },
 };
 ```
 
@@ -344,7 +346,7 @@ Use this method to forward messages of any kind.
 
 ##### `deleteMessage(<chat_id>, <from_message_id>)`
 
-Use this method to delete a message. A message can only be deleted if it was sent less than 48 hours ago. Any such sent outgoing message may be deleted. Additionally, if the bot is an administrator in a group chat, it can delete any message. If the bot is an administrator of a supergroup or channel, it can delete ordinary messages from any other user, including service messages about people added or removed from the chat. Returns *True* on success.
+Use this method to delete a message. A message can only be deleted if it was sent less than 48 hours ago. Any such sent outgoing message may be deleted. Additionally, if the bot is an administrator in a group chat, it can delete any message. If the bot is an administrator of a supergroup or channel, it can delete ordinary messages from any other user, including service messages about people added or removed from the chat. Returns _True_ on success.
 
 ##### `sendPhoto(<chat_id>, <file_id | path | url | buffer | stream>, {caption, fileName, serverDownload, replyToMessage, replyMarkup, notification})`
 
@@ -440,7 +442,7 @@ Use this method to send phone contacts.
 
 ##### `sendAction(<chat_id>, <action>)`
 
-Use this method when you need to tell the user that something is happening on the bot's side. Choose one, depending on what the user is about to receive: *typing* for text messages, *upload_photo* for photos, *record_video* or *upload_video* for videos, *record_audio* or *upload_audio* for audio files, *upload_document* for general files, *find_location* for location data, *record_video_note* or *upload_video_note* for video notes.
+Use this method when you need to tell the user that something is happening on the bot's side. Choose one, depending on what the user is about to receive: _typing_ for text messages, _upload_photo_ for photos, _record_video_ or _upload_video_ for videos, _record_audio_ or _upload_audio_ for audio files, _upload_document_ for general files, _find_location_ for location data, _record_video_note_ or _upload_video_note_ for video notes.
 
 ##### `sendGame(<chat_id>, <game_short_name>, {notification, replyToMessage, replyMarkup})`
 
@@ -448,11 +450,11 @@ Use this method to send a game.
 
 ##### `setGameScore(<user_id>, <score>, {force, disableEditMessage, chatId, messageId, inlineMessageId})`
 
-Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited *Message*, otherwise returns *True*. Returns an error, if the new score is not greater than the user's current score in the chat and force is *False*.
+Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited _Message_, otherwise returns _True_. Returns an error, if the new score is not greater than the user's current score in the chat and force is _False_.
 
 ##### `getGameHighScores(<user_id>, {chatId, messageId, inlineMessageId})`
 
-Use this method to get data for high score tables. Will return the score of the specified user and several of his neighbours in a game. On success, returns an *Array* of *GameHighScore* objects.
+Use this method to get data for high score tables. Will return the score of the specified user and several of his neighbours in a game. On success, returns an _Array_ of _GameHighScore_ objects.
 
 ##### `getUserProfilePhotos(<user_id>, {offset, limit})`
 

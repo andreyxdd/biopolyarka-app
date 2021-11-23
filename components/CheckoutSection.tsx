@@ -163,7 +163,7 @@ const CheckoutSection = () => {
       setTotalPrice(items.reduce((a, c) => a + c?.price, 0));
       setOrder({
         ...order,
-        orderDetails: items.map((item) => item.title).join(" "),
+        orderDetails: items.map((item) => item.title).join(", "),
       });
     }
   }, [items]);

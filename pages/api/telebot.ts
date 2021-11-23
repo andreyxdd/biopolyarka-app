@@ -14,7 +14,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const TeleBot = require("telebot");
+  const TeleBot = require("../../telebot/lib/telebot.js");
   const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 
   const body = JSON.parse(req.body);
@@ -33,4 +33,6 @@ export default function handler(
   bot.sendMessage(process.env.TELEGRAM_CHAT_ID, messageText);
 
   console.log(messageText);
+
+  res.status(200).json(body);
 }
