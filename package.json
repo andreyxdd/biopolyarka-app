@@ -32,8 +32,7 @@
     "react-icons": "^4.3.1",
     "react-number-format": "^4.8.0",
     "react-slick": "^0.28.1",
-    "slick-carousel": "^1.8.1",
-    "telebot": "^1.4.1"
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.3.0",
