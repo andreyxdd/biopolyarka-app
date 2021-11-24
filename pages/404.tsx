@@ -9,7 +9,7 @@ const Notfound = () => {
   useEffect(() => {
     setTimeout(() => {
       router.push("/");
-    }, 5000);
+    }, 6000);
   }, []);
 
   // purple x moss 2020

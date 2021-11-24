@@ -66,10 +66,7 @@ const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
                 margin: "4px -2px -2px -2px",
               }}
             >
-              <a
-                href="https://www.instagram.com/biopolyarka.a/"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
+              <a href="." style={{ textDecoration: "none", color: "inherit" }}>
                 {navbarTitle}
               </a>
             </p>

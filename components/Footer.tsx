@@ -34,7 +34,9 @@ const Footer: React.FC<IFooterProps> = ({ navbarTitle }) => {
             left: "14px",
           }}
         >
-          {navbarTitle}
+          <a href="." style={{ textDecoration: "none", color: "inherit" }}>
+            {navbarTitle}
+          </a>
         </p>
 
         <a
@@ -61,7 +63,7 @@ const Footer: React.FC<IFooterProps> = ({ navbarTitle }) => {
         <Typography variant="caption">
           Proudly created by{" "}
           <a
-            href="mailto: andreyxdd@yandex.ru"
+            href="https://linktr.ee/andreyxdd"
             style={{ textDecoration: "none", color: "grey" }}
           >
             Andrey Volkov

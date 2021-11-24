@@ -89,13 +89,15 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
       // contact type and other fields were fulfilled correctly
       // console.log("Successfully submited");
 
-      const messageText = `👋 Был получен новый заказ с сайта!\n\nИмя заказчика: ${
+      const messageText = `👋 *Был получен новый заказ с сайта!*\n\n - Имя заказчика: ${
         formState.fields.name.value
-      }\nСвязь через: ${formState.fields.radio.value}\nКонактные данные: ${
+      }\n - Связь через: ${
+        formState.fields.radio.value
+      }\n - Конактные данные: ${
         formState.fields.radio.value === "Email"
           ? `${formState.fields.contact.value}`
           : `+7${formState.fields.contact.value}`
-      }\nДетали заказа (${items.length} шт.): ${items
+      }\n - Детали заказа (${items.length} шт.): ${items
         .map((item) => item.title)
         .join(", ")}
       `;
@@ -122,8 +124,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
         })
         .catch((error) => {
           setAlert({ ...alert, opened: true, status: "error" });
-          console.log(process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN);
-          console.log(process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID);
+          console.log(process.env.TELEGRAM_BOT_TOKEN);
           console.error("Error:", error);
         });
 
