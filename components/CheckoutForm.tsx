@@ -122,6 +122,8 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
         })
         .catch((error) => {
           setAlert({ ...alert, opened: true, status: "error" });
+          console.log(process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN);
+          console.log(process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID);
           console.error("Error:", error);
         });
 
