@@ -2,10 +2,7 @@ import type { NextPage } from "next";
 // import Head from "next/head";
 // import styles from "../styles/Home.module.css";
 import React from "react";
-import {
-  getContentfulAboutData,
-  getContentfulCollectionData,
-} from "../lib/api";
+import { getContentfuData } from "../lib/api";
 import App from "../components/App";
 import { IContentfull } from "../types";
 
@@ -13,10 +10,9 @@ import { IContentfull } from "../types";
  * Get server side properties from the contentful API
  */
 export async function getStaticProps() {
-  const aboutContent = await getContentfulAboutData();
-  const collectionContent = await getContentfulCollectionData();
+  const data = await getContentfuData();
 
-  if (!aboutContent || !collectionContent) {
+  if (!data.aboutContent || !data.collectionContent) {
     return {
       notFound: true,
     };
@@ -24,10 +20,10 @@ export async function getStaticProps() {
 
   return {
     props: {
-      aboutContent,
-      collectionContent,
+      aboutContent: data.aboutContent,
+      collectionContent: data.collectionContent,
     },
-    revalidate: 60,
+    revalidate: 1,
   };
 }
 

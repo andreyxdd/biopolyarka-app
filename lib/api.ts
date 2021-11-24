@@ -1,28 +1,47 @@
 import { createClient } from "contentful";
 
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID as string,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
-});
-
 /**
- * This function returns data for "About" content model (only one entry) from the Contentful-api
+ * This function returns data from the ContentfulAPI model
  * @return {Object}
  */
-export async function getContentfulAboutData() {
+export async function getContentfuData() {
+  const client = createClient({
+    space: process.env.CONTENTFUL_SPACE_ID as string,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
+  });
+
+  const collectionContent = await client.getEntries({ content_type: "ring" });
   const aboutContent = await client.getEntry(
     process.env.CONTENTFUL_ABOUT_ENTRY_ID as string
   );
 
-  return aboutContent.fields;
+  return {
+    aboutContent: aboutContent.fields,
+    collectionContent: collectionContent.items,
+  };
 }
 
 /**
- * This function returns data for "Ring" content model (multiple entries) from the Contentful-api
+ * This function returns response of the POST request to the telegram bot
+ * @param {string} messageText
  * @return {Object}
  */
-export async function getContentfulCollectionData() {
-  const collectionContent = await client.getEntries({ content_type: "ring" });
+export async function postTelegramMessage(messageText: string) {
+  // send message to telegram bot
+  const response = await fetch(
+    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+    {
+      method: "post",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chat_id: process.env.TELEGRAM_CHAT_ID,
+        text: messageText,
+      }),
+    }
+  );
 
-  return collectionContent.items;
+  return response.json(); // parses JSON response into native JavaScript objects
 }
