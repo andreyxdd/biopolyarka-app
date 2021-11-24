@@ -6,20 +6,29 @@ import CheckoutSection from "./CheckoutSection";
 import { IContentfull } from "../types";
 import AppContextProvider from "../context/AppContextProvider";
 import Footer from "./Footer";
+import { SnackbarProvider } from "notistack";
 
 const App: React.FC<IContentfull> = ({ aboutContent, collectionContent }) => {
   return (
     <AppContextProvider>
-      <Navbar navbarTitle={aboutContent.navbarTitle} />
-      <AboutSection
-        navbarTitle={aboutContent.navbarTitle}
-        title={aboutContent.title}
-        image={aboutContent.image}
-        description={aboutContent.description}
-      />
-      <CollectionSection collectionContent={collectionContent} />
-      <CheckoutSection />
-      <Footer navbarTitle={aboutContent.navbarTitle} />
+      <SnackbarProvider
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        maxSnack={3}
+      >
+        <Navbar navbarTitle={aboutContent.navbarTitle} />
+        <AboutSection
+          navbarTitle={aboutContent.navbarTitle}
+          title={aboutContent.title}
+          image={aboutContent.image}
+          description={aboutContent.description}
+        />
+        <CollectionSection collectionContent={collectionContent} />
+        <CheckoutSection />
+        <Footer navbarTitle={aboutContent.navbarTitle} />
+      </SnackbarProvider>
     </AppContextProvider>
   );
 };

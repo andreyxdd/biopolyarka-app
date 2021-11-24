@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Card,
   CardHeader,
   CardActions,
   CardContent,
   CardMedia,
-  Snackbar,
-  Alert,
   Typography,
 } from "@mui/material";
 import { IRing } from "../@types/generated/contentful";
@@ -14,6 +12,7 @@ import { IItemProps } from "../types";
 import ClientOnlyDiv from "./ClientOnlyDiv";
 import Slider from "react-slick";
 import ThemeButton from "./ThemeButton";
+import { useSnackbar } from "notistack";
 interface IItemCardProps {
   data: IRing;
   setItems: React.Dispatch<React.SetStateAction<Array<IItemProps>>>;
@@ -22,6 +21,7 @@ interface IItemCardProps {
 
 const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
   const { title, price, description, cardImages, material } = data.fields;
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -36,7 +36,9 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
     setItems((items) => [...items, { title, price, id }]);
 
     // alerting about success
-    setAlert({ ...alert, opened: true });
+    enqueueSnackbar(`Товар ${title} был успешно добавлен в корзину!`, {
+      variant: "success",
+    });
   };
 
   const settings = {
@@ -54,16 +56,6 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
         <ul style={{ padding: "0px", margin: "0px" }}> {dots} </ul>
       </div>
     ),
-  };
-
-  // Alert state
-  const [alert, setAlert] = useState({ opened: false, status: "" });
-
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setAlert({ ...alert, opened: false });
   };
 
   return (
@@ -120,16 +112,6 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
       <CardActions sx={{ justifyContent: "center" }}>
         <ThemeButton onClick={handleClick}>Добавить в корзину</ThemeButton>
       </CardActions>
-      <Snackbar
-        open={alert.opened}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Товар <q>{title}</q>был успешно добавлен в корзину!
-        </Alert>
-      </Snackbar>
     </Card>
   );
 };

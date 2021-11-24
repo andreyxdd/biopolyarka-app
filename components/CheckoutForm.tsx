@@ -113,7 +113,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
           setItems([]);
           setAlert({ ...alert, opened: true, status: "success" });
 
-          console.log("Cleared state and local storage!");
+          // console.log("Cleared state and local storage!");
         })
         .catch((error) => {
           setAlert({ ...alert, opened: true, status: "error" });
@@ -298,7 +298,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
               >
                 <Grid item>
                   <FormControlLabel
-                    value="telegram"
+                    value="Telegram"
                     control={<Radio />}
                     label="Telegram"
                   />
@@ -312,14 +312,14 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
                 </Grid>
                 <Grid item>
                   <FormControlLabel
-                    value="call"
+                    value="Звонок"
                     control={<Radio />}
                     label="Звонок"
                   />
                 </Grid>
                 <Grid item>
                   <FormControlLabel
-                    value="email"
+                    value="Email"
                     control={<Radio />}
                     label="E-mail"
                   />

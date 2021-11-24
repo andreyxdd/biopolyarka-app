@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { Container, Typography, Divider, Snackbar } from "@mui/material";
+import { Container, Typography, Divider } from "@mui/material";
 import { useNavlink } from "../customHooks/useNavlink";
-import Alert from "./Alert";
 import CheckoutForm from "./CheckoutForm";
+import { VariantType, useSnackbar } from "notistack";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -14,16 +14,25 @@ const StyledSection = styled.section`
 
 const CheckoutSection = () => {
   const checkoutRef = useNavlink("Checkout");
+  const { enqueueSnackbar } = useSnackbar();
 
   // Alert state
   const [alert, setAlert] = useState({ opened: false, status: "" });
 
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
+  useEffect(() => {
+    if (alert.opened) {
+      let notificationText =
+        "Заказ успешно оформлен. Скоро мы с вами свяжемся!";
+      if (alert.status === "error") {
+        notificationText =
+          "При оформлении заказа произошла внутрення ошибка сайта. Пожалуйста, обратитесь к нам через инстаграм";
+      }
+
+      enqueueSnackbar(notificationText, {
+        variant: alert.status as VariantType,
+      });
     }
-    setAlert({ ...alert, opened: false });
-  };
+  }, [alert]);
 
   return (
     <StyledSection ref={checkoutRef} id="checkoutSectionId">
@@ -37,28 +46,6 @@ const CheckoutSection = () => {
         </Typography>
         <CheckoutForm alert={alert} setAlert={setAlert} />
       </Container>
-      <Snackbar
-        open={alert.opened}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        sx={{ bottom: { xs: 140, sm: 150 } }}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        {alert.status === "success" ? (
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            Заказ успешно оформлен. Скоро мы с вами свяжемся!
-          </Alert>
-        ) : (
-          <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-            При оформлении заказа произошла внутрення ошибка сайта. Пожалуйста,
-            обратитесь к нам через инстаграмю
-          </Alert>
-        )}
-      </Snackbar>
     </StyledSection>
   );
 };

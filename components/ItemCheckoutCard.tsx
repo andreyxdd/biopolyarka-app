@@ -10,9 +10,11 @@ import {
 import { GoTrashcan } from "react-icons/go";
 import { useContextTypes } from "../customHooks/useContextTypes";
 import { IItemProps } from "../types";
+import { useSnackbar } from "notistack";
 
 const ItemCheckoutCard: React.FC<IItemProps> = ({ id, title, price }) => {
   const { setItems } = useContextTypes();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -25,6 +27,11 @@ const ItemCheckoutCard: React.FC<IItemProps> = ({ id, title, price }) => {
 
     // updateting App state
     setItems((items) => items.filter((obj: IItemProps) => obj.id !== id));
+
+    // alerting about success
+    enqueueSnackbar(`Товар ${title} был удален из корзины :(`, {
+      variant: "info",
+    });
   };
 
   return (
