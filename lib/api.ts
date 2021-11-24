@@ -29,7 +29,7 @@ export async function getContentfuData() {
 export async function postTelegramMessage(messageText: string) {
   // send message to telegram bot
   const response = await fetch(
-    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+    `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN}/sendMessage`,
     {
       method: "post",
       cache: "no-cache",
@@ -37,7 +37,7 @@ export async function postTelegramMessage(messageText: string) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        chat_id: process.env.TELEGRAM_CHAT_ID,
+        chat_id: process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID,
         text: messageText,
       }),
     }

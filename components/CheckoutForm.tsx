@@ -92,7 +92,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
       const messageText = `👋 Был получен новый заказ с сайта!\n\nИмя заказчика: ${
         formState.fields.name.value
       }\nСвязь через: ${formState.fields.radio.value}\nКонактные данные: ${
-        formState.fields.radio.value === "email"
+        formState.fields.radio.value === "Email"
           ? `${formState.fields.contact.value}`
           : `+7${formState.fields.contact.value}`
       }\nДетали заказа (${items.length} шт.): ${items
@@ -102,6 +102,11 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
 
       // sending order details to telegram bot
       postTelegramMessage(messageText)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Something went wrong");
+          }
+        })
         .then((data) => {
           //  updateting local storage
           const localStorageList = localStorage.getItem("itemsList") || "[]";
@@ -176,7 +181,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
     const currentValue = (event.target as HTMLInputElement).value;
 
     if (
-      formState.fields.radio.value === "email" &&
+      formState.fields.radio.value === "Email" &&
       !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
         currentValue
       )
@@ -193,6 +198,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
         },
       });
     } else if (
+      formState.fields.radio.value !== "Email" &&
       !/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/.test(
         currentValue
       )
@@ -305,7 +311,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
                 </Grid>
                 <Grid item>
                   <FormControlLabel
-                    value="whatsapp"
+                    value="Whatsapp"
                     control={<Radio />}
                     label="Whatsapp"
                   />
@@ -332,7 +338,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
               required
               fullWidth
               label={
-                formState.fields.radio.value === "email"
+                formState.fields.radio.value === "Email"
                   ? "E-mail"
                   : "Мобильный телефон"
               }
@@ -340,22 +346,22 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
               error={formState.fields.contact.error}
               helperText={formState.fields.contact.helperText}
               autoComplete={
-                formState.fields.radio.value === "email" ? "email" : "tel-local"
+                formState.fields.radio.value === "Email" ? "email" : "tel-local"
               }
               InputProps={
-                formState.fields.radio.value !== "email"
+                formState.fields.radio.value !== "Email"
                   ? {
                       inputComponent: NumberFormatCustom as any,
                     }
                   : {}
               }
               placeholder={
-                formState.fields.radio.value === "email"
+                formState.fields.radio.value === "Email"
                   ? "sample@email.com"
                   : ""
               }
               disabled={formState.disabled}
-              type={formState.fields.radio.value === "email" ? "email" : "tel"}
+              type={formState.fields.radio.value === "Email" ? "email" : "tel"}
               autoFocus={formState.focusOnContact}
             />
           </Grid>
