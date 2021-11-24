@@ -63,11 +63,33 @@ const CheckoutSection = () => {
       // contact type and other fields were fulfilled
       console.log("Successfully submited");
 
+      const messageText = `
+      A new order has been recieved via BIOPOLYARKA APP:
+    
+      Client Name: ${order.clientName}
+      Contact via: ${order.contactType}
+      Contact details: +7${order.contactDetails}
+      Order details: ${order.orderDetails}
+      `;
+
+      console.log(process.env.CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN);
+
       // sending order details to telegram bot
-      fetch("/api/telebot", {
-        method: "post",
-        body: JSON.stringify(order),
-      });
+      fetch(
+        `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "cache-control": "no-cache",
+          },
+          cache: "no-cache",
+          method: "post",
+          body: JSON.stringify({
+            chat_id: process.env.TELEGRAM_CHAT_ID,
+            text: messageText,
+          }),
+        }
+      );
 
       //  updateting local storage
       const localStorageList = localStorage.getItem("itemsList") || "[]";
