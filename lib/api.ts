@@ -43,5 +43,10 @@ export async function postTelegramMessage(messageText: string) {
     }
   );
 
+  console.log(
+    `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN}/sendMessage`
+  );
+  console.log(process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID);
+
   return response.json(); // parses JSON response into native JavaScript objects
 }
