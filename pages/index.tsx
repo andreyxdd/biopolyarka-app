@@ -1,6 +1,4 @@
 import type { NextPage } from "next";
-// import Head from "next/head";
-// import styles from "../styles/Home.module.css";
 import React from "react";
 import { getContentfuData } from "../lib/api";
 import App from "../components/App";
@@ -12,7 +10,12 @@ import { IContentfull } from "../types";
 export async function getStaticProps() {
   const data = await getContentfuData();
 
-  if (!data.aboutContent || !data.collectionContent) {
+  if (
+    !data.aboutContent ||
+    !data.collectionContent ||
+    !data.ringContent ||
+    !data.checkoutContent
+  ) {
     return {
       notFound: true,
     };
@@ -22,6 +25,8 @@ export async function getStaticProps() {
     props: {
       aboutContent: data.aboutContent,
       collectionContent: data.collectionContent,
+      ringContent: data.ringContent,
+      checkoutContent: data.checkoutContent,
     },
     revalidate: 1,
   };
@@ -34,9 +39,16 @@ export async function getStaticProps() {
 const Home: NextPage<IContentfull> = ({
   aboutContent,
   collectionContent,
+  ringContent,
+  checkoutContent,
 }): JSX.Element => {
   return (
-    <App aboutContent={aboutContent} collectionContent={collectionContent} />
+    <App
+      aboutContent={aboutContent}
+      collectionContent={collectionContent}
+      ringContent={ringContent}
+      checkoutContent={checkoutContent}
+    />
   );
 };
 

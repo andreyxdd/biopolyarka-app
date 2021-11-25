@@ -1,8 +1,15 @@
-import { IAboutFields, IRing } from "./@types/generated/contentful";
+import {
+  IAboutFields,
+  ICollectionFields,
+  IRing,
+  ICheckoutFields,
+} from "./@types/generated/contentful";
 
 export interface IContentfull {
   aboutContent: IAboutFields;
-  collectionContent: Array<IRing>;
+  ringContent: Array<IRing>;
+  collectionContent: ICollectionFields;
+  checkoutContent: ICheckoutFields;
 }
 
 export interface IItemProps {

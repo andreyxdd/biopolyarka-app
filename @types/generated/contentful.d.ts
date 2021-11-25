@@ -4,20 +4,20 @@ import { Asset, Entry } from "contentful";
 import { Document } from "@contentful/rich-text-types";
 
 export interface IAboutFields {
-  /** navbar-title */
+  /** Title */
+  title: string;
+
+  /** Navbar-title */
   navbarTitle: string;
 
-  /** title */
-  title?: string | undefined;
-
-  /** image */
+  /** Image */
   image: Asset;
 
-  /** description */
+  /** Description */
   description: Document;
 }
 
-/** Контент для секции "О нас" */
+/** Модель для раздела "О нас". */
 
 export interface IAbout extends Entry<IAboutFields> {
   sys: {
@@ -36,10 +36,61 @@ export interface IAbout extends Entry<IAboutFields> {
   };
 }
 
-export interface IRingFields {
-  /** Card Image */
-  cardImage: Asset;
+export interface ICheckoutFields {
+  /** Title */
+  title: string;
 
+  /** Description */
+  description: Document;
+}
+
+/** Модель для раздела с оформлением заказа. */
+
+export interface ICheckout extends Entry<ICheckoutFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "checkout";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
+export interface ICollectionFields {
+  /** Title */
+  title: string;
+
+  /** Description */
+  description: Document;
+}
+
+/** Модель для раздела с описанием товаров. */
+
+export interface ICollection extends Entry<ICollectionFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "collection";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
+export interface IRingFields {
   /** Title */
   title: string;
 
@@ -47,7 +98,7 @@ export interface IRingFields {
   price: number;
 
   /** Description */
-  description: string;
+  description?: string | undefined;
 
   /** Material */
   material?: string | undefined;
@@ -75,7 +126,7 @@ export interface IRing extends Entry<IRingFields> {
   };
 }
 
-export type CONTENT_TYPE = "about" | "ring";
+export type CONTENT_TYPE = "about" | "checkout" | "collection" | "ring";
 
 export type LOCALE_CODE = "en-US";
 

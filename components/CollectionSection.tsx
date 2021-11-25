@@ -5,6 +5,8 @@ import { Grid, Container, Typography, Divider } from "@mui/material";
 import { IRing } from "../@types/generated/contentful";
 import { useContextTypes } from "../customHooks/useContextTypes";
 import { useNavlink } from "../customHooks/useNavlink";
+import { ICollectionFields } from "../@types/generated/contentful";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -14,31 +16,31 @@ const StyledSection = styled.section`
 `;
 
 interface ICollectionSectionProps {
-  collectionContent: Array<IRing>;
+  collectionContent: ICollectionFields;
+  ringContent: Array<IRing>;
 }
 
 const CollectionSection: React.FC<ICollectionSectionProps> = ({
   collectionContent,
+  ringContent,
 }) => {
   const { setItems } = useContextTypes();
-  const collectionRef = useNavlink("Collection");
+  const collectionRef = useNavlink(collectionContent.title);
 
   return (
     <StyledSection ref={collectionRef} id="collectionSectionId">
       <Divider variant="middle" sx={{ m: 4 }} />
       <Container>
         <Typography variant="h4" style={{ color: "black" }}>
-          Collection
+          {collectionContent.title}
         </Typography>
         <Typography
+          component="div"
           variant="body1"
           sx={{ mt: 2, pb: 4 }}
           style={{ color: "black" }}
         >
-          Nam molestie volutpat orci, eget iaculis erat ullamcorper a. Sed
-          volutpat tellus diam, ac tempor turpis elementum ut. Proin aliquet,
-          lectus non hendrerit bibendum, mauris massa condimentum metus, eu
-          facilisis magna justo sed arcu.
+          {documentToReactComponents(collectionContent.description)}
         </Typography>
         <Grid
           container
@@ -46,7 +48,7 @@ const CollectionSection: React.FC<ICollectionSectionProps> = ({
           justifyContent="space-evenly"
           alignItems="stretch"
         >
-          {collectionContent.map((catalougeItem: IRing, idx: number) => (
+          {ringContent.map((catalougeItem: IRing, idx: number) => (
             <Grid
               key={`${catalougeItem.sys.id}-${idx}`}
               item

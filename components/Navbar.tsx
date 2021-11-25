@@ -18,20 +18,30 @@ import { useContextTypes } from "../customHooks/useContextTypes";
 import { scrollTo } from "../utils";
 import { IAboutFields } from "../@types/generated/contentful";
 
-const navLinks = [
-  { navLinkId: "Brand", scrollToId: "aboutSectionId" },
-  { navLinkId: "Collection", scrollToId: "collectionSectionId" },
-  { navLinkId: "Checkout", scrollToId: "checkoutSectionId" },
-];
-
 type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> &
   Pick<T, TRequired>;
 
 type INavbarProps = OptionalExceptFor<IAboutFields, "navbarTitle">;
 
-const Navbar: React.FC<INavbarProps> = ({ navbarTitle }) => {
-  const onMobile: boolean = useMediaQuery("only screen and (max-width: 750px)");
+interface INavLinkTitles {
+  aboutLinkTitle: string;
+  collectionLinkTitle: string;
+  checkoutLinkTitle: string;
+}
 
+const Navbar: React.FC<INavbarProps & INavLinkTitles> = ({
+  navbarTitle,
+  aboutLinkTitle,
+  collectionLinkTitle,
+  checkoutLinkTitle,
+}) => {
+  const navLinks = [
+    { navLinkId: aboutLinkTitle, scrollToId: "aboutSectionId" },
+    { navLinkId: collectionLinkTitle, scrollToId: "collectionSectionId" },
+    { navLinkId: checkoutLinkTitle, scrollToId: "checkoutSectionId" },
+  ];
+
+  const onMobile: boolean = useMediaQuery("only screen and (max-width: 750px)");
   const { items } = useContextTypes();
 
   const handleOnCartClick = () => {

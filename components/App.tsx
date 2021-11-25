@@ -8,7 +8,12 @@ import AppContextProvider from "../context/AppContextProvider";
 import Footer from "./Footer";
 import { SnackbarProvider } from "notistack";
 
-const App: React.FC<IContentfull> = ({ aboutContent, collectionContent }) => {
+const App: React.FC<IContentfull> = ({
+  aboutContent,
+  collectionContent,
+  ringContent,
+  checkoutContent,
+}) => {
   return (
     <AppContextProvider>
       <SnackbarProvider
@@ -18,15 +23,18 @@ const App: React.FC<IContentfull> = ({ aboutContent, collectionContent }) => {
         }}
         maxSnack={3}
       >
-        <Navbar navbarTitle={aboutContent.navbarTitle} />
-        <AboutSection
+        <Navbar
           navbarTitle={aboutContent.navbarTitle}
-          title={aboutContent.title}
-          image={aboutContent.image}
-          description={aboutContent.description}
+          aboutLinkTitle={aboutContent.title}
+          collectionLinkTitle={collectionContent.title}
+          checkoutLinkTitle={checkoutContent.title}
         />
-        <CollectionSection collectionContent={collectionContent} />
-        <CheckoutSection />
+        <AboutSection aboutContent={aboutContent} />
+        <CollectionSection
+          collectionContent={collectionContent}
+          ringContent={ringContent}
+        />
+        <CheckoutSection checkoutContent={checkoutContent} />
         <Footer navbarTitle={aboutContent.navbarTitle} />
       </SnackbarProvider>
     </AppContextProvider>

@@ -22,13 +22,12 @@ const StyledSection = styled.section`
   }
 `;
 
-const AboutSection: React.FC<IAboutFields> = ({
-  navbarTitle,
-  title,
-  image,
-  description,
-}) => {
-  const aboutRef = useNavlink("Brand");
+interface IAboutSectionProps {
+  aboutContent: IAboutFields;
+}
+
+const AboutSection: React.FC<IAboutSectionProps> = ({ aboutContent }) => {
+  const aboutRef = useNavlink(aboutContent.title);
 
   return (
     <StyledSection ref={aboutRef} id="aboutSectionId">
@@ -51,15 +50,15 @@ const AboutSection: React.FC<IAboutFields> = ({
                 textShadow: "3.3vh -3.1vw rgba(255, 158, 1, 0.3)",
               }}
             >
-              {navbarTitle}
+              {aboutContent.navbarTitle}
             </p>
           </Grid>
           <Grid item xs={12} sm={5}>
             <Image
-              src={"https:" + image.fields.file.url}
-              alt={`Boss Venera ${title}`}
-              width={image?.fields?.file?.details?.image?.width}
-              height={image?.fields?.file?.details?.image?.height}
+              src={"https:" + aboutContent.image.fields.file.url}
+              alt={`Boss Venera ${aboutContent.title}`}
+              width={aboutContent.image?.fields?.file?.details?.image?.width}
+              height={aboutContent.image?.fields?.file?.details?.image?.height}
             />
           </Grid>
           <Grid
@@ -78,7 +77,7 @@ const AboutSection: React.FC<IAboutFields> = ({
                   component="div"
                   style={{ color: "black" }}
                 >
-                  {documentToReactComponents(description)}
+                  {documentToReactComponents(aboutContent.description)}
                 </Typography>
               </Grid>
             </Grid>

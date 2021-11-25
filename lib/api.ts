@@ -10,14 +10,24 @@ export async function getContentfuData() {
     accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
   });
 
-  const collectionContent = await client.getEntries({ content_type: "ring" });
   const aboutContent = await client.getEntry(
     process.env.CONTENTFUL_ABOUT_ENTRY_ID as string
+  );
+  const collectionContent = await client.getEntry(
+    process.env.CONTENTFUL_COLLECTION_ENTRY_ID as string
+  );
+  const ringContent = await client.getEntries({
+    content_type: "ring",
+  });
+  const checkoutContent = await client.getEntry(
+    process.env.CONTENTFUL_CHECKOUT_ENTRY_ID as string
   );
 
   return {
     aboutContent: aboutContent.fields,
-    collectionContent: collectionContent.items,
+    collectionContent: collectionContent.fields,
+    ringContent: ringContent.items,
+    checkoutContent: checkoutContent.fields,
   };
 }
 
