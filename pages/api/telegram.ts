@@ -64,7 +64,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
               await mailer.send(mailOptions);
               res.status(200);
             } catch (error) {
-              throw new Error("Couldn't sent the error report to devs.");
+              throw reject(
+                new Error("Couldn't sent the error report to devs.")
+              );
             }
           })();
 
