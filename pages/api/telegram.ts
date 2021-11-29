@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { IItemProps } from "../../types";
 
 const mailer = require("@sendgrid/mail");
-mailer.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
+mailer.setApiKey(process.env.SENDGRID_API_KEY);
 
 /**
  * Function to handle API requests.
