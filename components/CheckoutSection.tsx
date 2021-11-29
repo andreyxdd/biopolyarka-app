@@ -33,7 +33,7 @@ const CheckoutSection: React.FC<ICheckoutSectionProps> = ({
         "Заказ успешно оформлен. Скоро мы с вами свяжемся!";
       if (alert.status === "error") {
         notificationText =
-          "При оформлении заказа произошла внутрення ошибка сайта. Пожалуйста, обратитесь к нам через инстаграм";
+          "При оформлении заказа произошла внутрення ошибка сайта. Пожалуйста, обратитесь к нам через Instagram.";
       }
 
       enqueueSnackbar(notificationText, {

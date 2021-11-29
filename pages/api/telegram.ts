@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { IItemProps } from "../../types";
 
 const mailer = require("@sendgrid/mail");
+mailer.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
 
 /**
  * Function to handle API requests.
@@ -44,8 +45,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       .then((response) => {
         // send error report to the developer
         if (!response.ok) {
-          mailer.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
-
           const errorReport = `
             Order details have not been sent to the Telegram chat:\r\n\r\n
             Telegram chat id (env): ${process.env.TELEGRAM_CHAT_ID}\r\n
