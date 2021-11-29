@@ -4,4 +4,7 @@ module.exports = {
   images: {
     domains: ["images.ctfassets.net"],
   },
+  env: {
+    NEXT_PUBLIC_SENDGRID_API_KEY: process.env.NEXT_PUBLIC_SENDGRID_API_KEY,
+  },
 };

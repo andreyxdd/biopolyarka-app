@@ -3,7 +3,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { IItemProps } from "../../types";
 
 const mailer = require("@sendgrid/mail");
-mailer.setApiKey(process.env.SENDGRID_API_KEY);
 
 /**
  * Function to handle API requests.
@@ -36,7 +35,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          chat_id: 123,
+          chat_id: process.env.TELEGRAM_CHAT_ID,
           text: messageText,
           parse_mode: "markdown",
         }),
@@ -45,6 +44,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       .then((response) => {
         // send error report to the developer
         if (!response.ok) {
+          reject(
+            new Error("Order details have not been sent to the Telegram chat.")
+          );
+
+          mailer.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
+
           const errorReport = `
             Order details have not been sent to the Telegram chat:\r\n\r\n
             Telegram chat id (env): ${process.env.TELEGRAM_CHAT_ID}\r\n
@@ -62,23 +67,15 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           (async () => {
             try {
               await mailer.send(mailOptions);
-              res.status(200);
             } catch (error) {
-              throw reject(
-                new Error("Couldn't sent the error report to devs.")
-              );
+              throw Error("Couldn't sent the error report to devs.");
             }
           })();
-
-          reject(
-            new Error("Order details have not been sent to the Telegram chat.")
-          );
+        } else {
+          res.status(200); // telegram message was sent successfully
+          res.end();
+          resolve();
         }
-      })
-      .then(() => {
-        res.status(200); // telegram message was sent successfully
-        res.end();
-        resolve();
       })
       .catch((err) => {
         console.error("An error occured on the server (internal):", err);
