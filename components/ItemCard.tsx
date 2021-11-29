@@ -89,8 +89,8 @@ const ItemCard: React.FC<IItemCardProps> = ({ data, setItems, id }) => {
               component="img"
               alt={`${title} ${material} ${description}`}
               height="300"
-              image={`https:${ringImage.fields.file.url}`}
-              key={`${ringImage.sys.createdAt}-${idx}`}
+              image={`https:${ringImage?.fields?.file?.url}`}
+              key={`${ringImage?.sys?.createdAt}-${idx}`}
             />
           ))}
         </Slider>

@@ -15,7 +15,6 @@ import { IItemProps } from "../types";
 import NumberFormatCustom from "./NumberFormatCustom";
 import ThemeButton from "./ThemeButton";
 import { useContextTypes } from "../customHooks/useContextTypes";
-import { postTelegramMessage } from "../lib/api";
 
 interface IAlertProps {
   opened: boolean;
@@ -89,46 +88,37 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = ({ alert, setAlert }) => {
       // contact type and other fields were fulfilled correctly
       // console.log("Successfully submited");
 
-      const messageText = `👋 *Был получен новый заказ с сайта!*\n\n - Имя заказчика: ${
-        formState.fields.name.value
-      }\n - Связь через: ${
-        formState.fields.radio.value
-      }\n - Конактные данные: ${
-        formState.fields.radio.value === "Email"
-          ? `${formState.fields.contact.value}`
-          : `+7${formState.fields.contact.value}`
-      }\n - Детали заказа (${items.length} шт.): ${items
-        .map((item) => item.title)
-        .join(", ")}
-      `;
-
       // sending order details to telegram bot
-      postTelegramMessage(messageText)
+      fetch("api/telegram", {
+        method: "POST",
+        body: JSON.stringify({
+          clientName: formState.fields.name.value,
+          contactType: formState.fields.radio.value,
+          contactInfo: formState.fields.contact.value,
+          chartItems: items,
+        }),
+      })
         .then((response) => {
-          if (!response.ok) {
-            throw new Error("Something went wrong");
+          if (response.ok) {
+            //  updateting local storage
+            const localStorageList = localStorage.getItem("itemsList") || "[]";
+            let itemsList = JSON.parse(localStorageList);
+            itemsList = [];
+            localStorage.setItem("itemsList", JSON.stringify(itemsList));
+
+            // updateting App state
+            setItems([]);
+            setAlert({ ...alert, opened: true, status: "success" });
+
+            // console.log("Cleared state and local storage!");
+          } else {
+            throw new Error("Calling to api/telegram has failed.");
           }
-        })
-        .then((data) => {
-          //  updateting local storage
-          const localStorageList = localStorage.getItem("itemsList") || "[]";
-          let itemsList = JSON.parse(localStorageList);
-          itemsList = [];
-          localStorage.setItem("itemsList", JSON.stringify(itemsList));
-
-          // updateting App state
-          setItems([]);
-          setAlert({ ...alert, opened: true, status: "success" });
-
-          // console.log("Cleared state and local storage!");
         })
         .catch((error) => {
           setAlert({ ...alert, opened: true, status: "error" });
-          console.log(process.env.TELEGRAM_BOT_TOKEN);
-          console.error("Error:", error);
+          console.error(error);
         });
-
-      // console.log("Cleared state and local storage!");
     }
   };
 
