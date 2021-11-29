@@ -44,10 +44,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       .then((response) => {
         // send error report to the developer
         if (!response.ok) {
-          reject(
-            new Error("Order details have not been sent to the Telegram chat.")
-          );
-
           mailer.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
 
           const errorReport = `
@@ -67,6 +63,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           (async () => {
             try {
               await mailer.send(mailOptions);
+              reject(
+                new Error(
+                  "Order details have not been sent to the Telegram chat."
+                )
+              );
             } catch (error) {
               throw Error("Couldn't sent the error report to devs.");
             }
