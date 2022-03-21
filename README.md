@@ -10,5 +10,7 @@ Web app for the handmade jewelry manufacturer built with:
 - [SendGrid API](https://sendgrid.com/solutions/email-api/) - to handle email notifications
 - [Telegram API](https://core.telegram.org/) - to send app's owner notifications about new orders
 
+The app is optimized for mobile users.
+
 ## Linting and Styling
 The project is based on ESLint ([Google standards](https://github.com/google/eslint-config-google)), Prettier, and [Husky](https://typicode.github.io/husky/#/) (pre-commit hooks).
