@@ -1,8 +1,7 @@
 {
-  "name": "template-app",
-  "version": "0.1.0",
-  "description": "The template starting project for Next.js apps. It includes configuration for the Eslint, typescript, prettier, and husky. Many thanks to https://www.youtube.com/watch?v=sH93pQb9bWM.",
-  "private": true,
+  "name": "Biopolyarka-web-app",
+  "version": "1.0.0",
+  "description": "Web application for Biopolyarka - online mini store of handmade jewelry",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
