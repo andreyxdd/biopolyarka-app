@@ -1,9 +1,9 @@
 # BIOPOLYARKA - Mini Online Store
 
-[Deployed on Vercel](https://biopolyarka.vercel.app/)
+[Biopolyarka](https://biopolyarka.vercel.app/)
 
 ## Intro
-Web app for the handmade jewelry manufacturer built with:
+Website of the handmade jewelry manufacturer built with:
 - [Next.js](https://nextjs.org/) - client React framework
 - [MUI](https://mui.com/) - ready-to-use React component library
 - [Contentful API](https://www.contentful.com/developers/docs/references/content-delivery-api/)  - to provide integration with a headless content management system
