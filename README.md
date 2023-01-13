@@ -1,6 +1,6 @@
 # BIOPOLYARKA - Mini Online Store
 
-[Biopolyarka](https://biopolyarka.vercel.app/)
+See [Biopolyarka](https://biopolyarka.vercel.app/)
 
 ## Intro
 Website of the handmade jewelry manufacturer built with:
