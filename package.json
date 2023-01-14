@@ -1,6 +1,7 @@
 {
   "name": "Biopolyarka-web-app",
   "version": "1.0.0",
+  "license": "GPL-3.0",
   "description": "Web application for Biopolyarka - online mini store of handmade jewelry",
   "scripts": {
     "dev": "next dev",
